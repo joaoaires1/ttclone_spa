@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Tela1 from '../components/Tela1'
 import Tela2 from '../components/Tela2'
 import Root from '../components/Root'
+import Login from '../components/Login'
 
 Vue.use(VueRouter)
 
@@ -13,7 +14,7 @@ const routes = [
         path: '/',
         component: Root,
         beforeEnter: (to, from, next) => {
-            if (a == 2) next('/foo')
+            if (a == 1) next('/foo')
             else next()
         }
     },
@@ -24,6 +25,10 @@ const routes = [
     {
         path: '/bar',
         component: Tela2
+    },
+    {
+        path: '/login',
+        component: Login
     }
 ]
 
