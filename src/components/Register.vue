@@ -4,10 +4,12 @@
           <div class="logo">
               <img src="../assets/twitter.svg" alt="">
           </div>
-          <h3>Login</h3>
+          <h3>Register</h3>
+          <input type="email" placeholder="Email">
+          <input type="text" placeholder="Name">
           <input type="text" placeholder="Username">
           <input type="password" placeholder="Password">
-          <button>Acess your account!</button>
+          <button>Register!</button>
       </div>
   </div>
 </template>
