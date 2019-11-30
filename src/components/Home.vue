@@ -6,11 +6,13 @@
             <left-section />
 
             <div class="main-section">
-                <h1>main</h1>
+                <tweet-box />
+
+                <div class="separator"></div>
             </div>
 
             <div class="right-section">
-                <h1>right</h1>
+                <input type="text" placeholder="Search on Twitter">
             </div>
 
         </div>
@@ -20,11 +22,13 @@
 
 <script>
 import LeftSection from '../components/LeftSection'
+import HomeTweetBox from '../components/HomeTweetBox'
 
 export default {
 
     components: {
-        'left-section': LeftSection
+        'left-section': LeftSection,
+        'tweet-box': HomeTweetBox
     }
 
 }
@@ -53,6 +57,11 @@ export default {
 
 .right-section {
     width: 30%;
+}
+
+.separator {
+    background: rgb(230, 236, 240);
+    height: 10px;
 }
 
 </style>

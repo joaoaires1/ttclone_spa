@@ -16,7 +16,7 @@
                 <p class="nav-text">Perfil</p>
             </div>
             <div class="nav-tweet">
-                <button>Tweetar</button>
+                <button>Tweet</button>
             </div>
 
         </div>
