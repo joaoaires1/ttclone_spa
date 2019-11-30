@@ -12,7 +12,7 @@
             </div>
 
             <div class="right-section">
-                <input type="text" placeholder="Search on Twitter">
+                <search />
             </div>
 
         </div>
@@ -23,12 +23,14 @@
 <script>
 import LeftSection from '../components/LeftSection'
 import HomeTweetBox from '../components/HomeTweetBox'
+import Search from '../components/Search'
 
 export default {
 
     components: {
         'left-section': LeftSection,
-        'tweet-box': HomeTweetBox
+        'tweet-box': HomeTweetBox,
+        'search': Search
     }
 
 }
@@ -44,19 +46,21 @@ export default {
 
 .content {
     width: 100%;
+    height: 100vh;
     max-width: 1200px;
     display: flex;
     justify-content: center;
 }
 
 .main-section {
-    width: 45%;
-    border-left: 2px solid #e5ffe5;
-    border-right: 2px solid #e5ffe5;
+    width: 50%;
+    border-left: 1px solid #e5ffe5;
+    border-right: 1px solid #e5ffe5;
 }
 
 .right-section {
-    width: 30%;
+    width: 25%;
+    padding: 12px;
 }
 
 .separator {
