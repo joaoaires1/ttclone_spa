@@ -22,7 +22,7 @@ export default {
 }
 </script>
 
-<style scope>
+<style scoped>
 
 .container {
     display: flex;
