@@ -7,8 +7,10 @@
 
             <div class="main-section">
                 <tweet-box />
-
                 <div class="separator"></div>
+                <timiline-post />
+                <timiline-post />
+                <timiline-post />
             </div>
 
             <div class="right-section">
@@ -24,13 +26,15 @@
 import LeftSection from '../components/LeftSection'
 import HomeTweetBox from '../components/HomeTweetBox'
 import Search from '../components/Search'
+import TimeLinePost from '../components/TimeLinePost'
 
 export default {
 
     components: {
         'left-section': LeftSection,
         'tweet-box': HomeTweetBox,
-        'search': Search
+        'search': Search,
+        'timiline-post': TimeLinePost
     }
 
 }
