@@ -27,6 +27,7 @@ import LeftSection from '../components/LeftSection'
 import HomeTweetBox from '../components/HomeTweetBox'
 import Search from '../components/Search'
 import TimeLinePost from '../components/TimeLinePost'
+import { log } from 'util'
 
 export default {
 
@@ -35,6 +36,10 @@ export default {
         'tweet-box': HomeTweetBox,
         'search': Search,
         'timiline-post': TimeLinePost
+    },
+    created() {
+        log(this.$store.state.name);
+        
     }
 
 }

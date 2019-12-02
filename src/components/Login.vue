@@ -14,10 +14,15 @@
 
 <script>
 export default {
-    data() {
+    data () {
         return {
             
         }
+    },
+    created () {
+        // const parsed = JSON.stringify({ id: 10, token: "asdkaskhdghkg"})
+        // localStorage.setItem('authenticatedUser', parsed)
+        // log(localStorage.getItem('authenticatedUser'))
     }
 }
 </script>

@@ -7,7 +7,7 @@
 
         <div class="post">
             <div class="post-header">
-                <span>Joao Aires</span> @joaoaires - 1h
+                <span>{{ this.$store.state.name }}</span> @joaoaires - 1h
             </div>
             <div class="post-content">
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quia fuga a veniam, eligendi distinctio ex et iste minima magni nesciunt unde ad nobis sequi culpa tenetur nostrum obcaecati similique quibusdam.
@@ -18,8 +18,17 @@
 </template>
 
 <script>
-export default {
+import { mapActions } from 'vuex'
 
+export default {
+    created () {
+        this.$store.dispatch('changeNameAction', 'Joao')
+    },
+    methods: {
+        ...mapActions([
+            'changeNameAction'
+        ])
+    }
 }
 </script>
 
