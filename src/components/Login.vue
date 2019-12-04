@@ -5,24 +5,54 @@
               <img src="../assets/twitter.svg" alt="">
           </div>
           <h3>Login</h3>
-          <input type="text" placeholder="Username">
-          <input type="password" placeholder="Password">
-          <button>Acess your account!</button>
+          <input v-model="username" type="text" placeholder="Username">
+          <input v-model="password" type="password" placeholder="Password">
+          <button @click="doLogin" >Acess your account!</button>
       </div>
   </div>
 </template>
 
 <script>
+
 export default {
     data () {
         return {
-            
+            username: '',
+            password: '',
+            userData: {
+                id: '',
+                name: '',
+                username: '',
+                email: '',
+                api_token: ''
+            }
+        }
+    },
+    methods: {
+        async doLogin () {
+            await this.$http.post('/login', { 
+                    username: this.username,
+                    password: this.password 
+                })
+                .then(res => {
+                    let { data } = res
+
+                    this.userData.id        = data.id
+                    this.userData.name      = data.name
+                    this.userData.username  = data.username
+                    this.userData.email     = data.email
+                    this.userData.api_token = data.api_token
+
+                    let parsed = JSON.stringify(this.userData)
+
+                    localStorage.setItem('authenticatedUser', parsed)
+
+                    this.$router.push('home')
+                })
         }
     },
     created () {
-        // const parsed = JSON.stringify({ id: 10, token: "asdkaskhdghkg"})
-        // localStorage.setItem('authenticatedUser', parsed)
-        // log(localStorage.getItem('authenticatedUser'))
+
     }
 }
 </script>

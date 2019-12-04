@@ -15,6 +15,9 @@
                 <img src="../assets/avatar.png" class="nav-avatar" width="30px" alt="">
                 <p class="nav-text">Perfil</p>
             </div>
+            <div class="logout">
+                <button @click="doLogout" >sair</button>
+            </div>
             <div class="nav-tweet">
                 <button>Tweet</button>
             </div>
@@ -25,9 +28,31 @@
 </template>
 
 <script>
-export default {
 
+export default {
+    data () {
+        return {
+            user: ''
+        }
+    },
+    methods: {
+        doLogout () {
+
+            this.$http.post('/logout', {
+                id: this.user.id,
+                api_token: this.user.api_token
+            }).then(() => {
+                localStorage.setItem('authenticatedUser', false)
+                this.$router.push('login')
+            })
+
+        }
+    },
+    created () {
+        this.user = JSON.parse(localStorage.getItem('authenticatedUser'))
+    }
 }
+
 </script>
 
 <style>
@@ -69,6 +94,16 @@ export default {
     background: #107C10;
     color: #FFF;
     font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 0.05em
+}
+
+.logout button{
+    padding: 4px 6px;
+    border: none;
+    border-radius: 50px;
+    background: #107C10;
+    color: #FFF;
     font-weight: bold;
     letter-spacing: 0.05em
 }

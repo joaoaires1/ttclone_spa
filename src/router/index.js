@@ -6,28 +6,68 @@ import Home from '../components/Home'
 
 Vue.use(VueRouter)
 
-const a = 1
-
 const routes = [
     {
         path: '/',
         beforeEnter: (to, from, next) => {
-            if (a == 1) next('/login')
-            else next()
+            let isAuthenticated = JSON.parse(localStorage.getItem('authenticatedUser'))
+            
+            if (isAuthenticated) {
+                next('/home')
+            } else {
+                next('/login')
+            }
         }
     },
     {
+        name: 'login',
         path: '/login',
-        component: Login
+        component: Login,
+        beforeEnter: (to, from, next) => {
+            let isAuthenticated = JSON.parse(localStorage.getItem('authenticatedUser'))
+
+            if (isAuthenticated) {
+                next('/home')
+            } else {
+                next()
+            }
+        }
     },
     {
+        name: 'register',
         path: '/register',
-        component: Register
+        component: Register,
+        beforeEnter: (to, from, next) => {
+            let isAuthenticated = JSON.parse(localStorage.getItem('authenticatedUser'))
+
+            if (isAuthenticated) {
+                next('/home')
+            } else {
+                next()
+            }
+        }
     },
     {
+        name: 'home',
         path: '/home',
-        component: Home
+        component: Home,
+        meta: {
+            requiresAuth: true
+        }
     }
 ]
 
-export default new VueRouter({ routes })
+const router = new VueRouter({ mode: 'history', routes })
+
+router.beforeEach((to, from, next) => {
+    const requiresAuth = to.matched.some(record  => record.meta.requiresAuth)
+    const isAuthenticated = JSON.parse(localStorage.getItem('authenticatedUser'))
+    
+    if (requiresAuth && !isAuthenticated) {
+        next('/login')
+    } else {
+        next()
+    }
+})
+
+export default router
