@@ -58,8 +58,6 @@ export default {
         
     },
     created() {
-        const isAuthenticated = JSON.parse(localStorage.getItem('authenticatedUser'))
-        this.user = isAuthenticated
         this.$store.dispatch('initPostsAction')
     }
 

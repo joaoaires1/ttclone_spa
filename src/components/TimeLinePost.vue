@@ -19,7 +19,6 @@
 
 <script>
 import { mapActions } from 'vuex'
-import { log } from 'util'
 
 export default {
     props: ['post'],
@@ -29,9 +28,7 @@ export default {
         }
     },
     created () {
-        log('qq', this.post)
         this.postData = this.post
-
     },
     methods: {
         ...mapActions([

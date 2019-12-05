@@ -20,10 +20,14 @@ export default new Vuex.Store({
             state.name = payload
         },
         initPosts ( state, payload ) {
-            log('aasd', payload)
+            
             payload.map(query => {
                 state.posts.push(query)
             })
+            
+        },
+        clearPosts (state) {
+            state.posts = []
         }   
     },
     actions: {
@@ -39,14 +43,18 @@ export default new Vuex.Store({
                 api_token: isAuthenticated.api_token
             } })
             .then(res => {
-                log(res.data.posts)
+
                 commit('initPosts', res.data.posts)
+
             })
             .catch(err => log(err)) 
         },
         addPostAction ({ commit }, post) 
         {
             commit('initPosts', post)
+        },
+        clearPostsAction ({ commit }) {
+            commit('clearPosts')
         }
     }
 })

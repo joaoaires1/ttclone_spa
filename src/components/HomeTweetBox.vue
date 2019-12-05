@@ -45,16 +45,15 @@ export default {
                 api_token: this.user.api_token,
                 text: this.postContent
             }).then(res => {
-                log(res.data)
+
                 this.$store.dispatch('addPostAction', [res.data])
+
             }).catch(err => log(err))
         }
     },
     created () {
         const isAuthenticated = JSON.parse(localStorage.getItem('authenticatedUser'))
         this.user = isAuthenticated
-
-        log(this.user)
     }
 
 }

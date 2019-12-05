@@ -29,6 +29,8 @@
 
 <script>
 
+import { mapActions } from 'vuex'
+
 export default {
     data () {
         return {
@@ -36,6 +38,9 @@ export default {
         }
     },
     methods: {
+        ...mapActions([
+            'clearPostsAction'
+        ]),
         doLogout () {
 
             this.$http.post('/logout', {
@@ -43,6 +48,7 @@ export default {
                 api_token: this.user.api_token
             }).then(() => {
                 localStorage.setItem('authenticatedUser', false)
+                this.$store.dispatch('clearPostsAction')
                 this.$router.push('login')
             })
 
