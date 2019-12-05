@@ -12,9 +12,9 @@
             </div>
 
             <div class="tweet-text">
-                <textarea name="" placeholder="What is happening?" maxlength="140"></textarea>
+                <textarea v-model="postContent" placeholder="What is happening?" maxlength="140"></textarea>
                 <div class="tweet-text-submit">
-                    <button>Tweet</button>
+                    <button @click="storePost" >Tweet</button>
                 </div>                
             </div>
 
@@ -24,7 +24,38 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+import { log } from 'util'
 export default {
+
+    data() {
+        return {
+            user: '',
+            postContent: ''
+        }
+    },
+    methods: {
+        ...mapActions([
+            'addPostAction'
+        ]),
+        storePost ()
+        {
+            this.$http.post('/posts', {
+                id: this.user.id,
+                api_token: this.user.api_token,
+                text: this.postContent
+            }).then(res => {
+                log(res.data)
+                this.$store.dispatch('addPostAction', [res.data])
+            }).catch(err => log(err))
+        }
+    },
+    created () {
+        const isAuthenticated = JSON.parse(localStorage.getItem('authenticatedUser'))
+        this.user = isAuthenticated
+
+        log(this.user)
+    }
 
 }
 </script>

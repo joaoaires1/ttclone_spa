@@ -8,9 +8,9 @@
             <div class="main-section">
                 <tweet-box />
                 <div class="separator"></div>
-                <timiline-post />
-                <timiline-post />
-                <timiline-post />
+                <div v-for="post in this.posts" :key="post.id">
+                    <timiline-post :post="post" />
+                </div>
             </div>
 
             <div class="right-section">
@@ -23,11 +23,13 @@
 </template>
 
 <script>
+
 import LeftSection from '../components/LeftSection'
 import HomeTweetBox from '../components/HomeTweetBox'
 import Search from '../components/Search'
 import TimeLinePost from '../components/TimeLinePost'
-import { log } from 'util'
+import { mapActions } from 'vuex'
+// import { log } from 'util'
 
 export default {
 
@@ -37,9 +39,28 @@ export default {
         'search': Search,
         'timiline-post': TimeLinePost
     },
-    created() {
-        log(this.$store.state.name);
+    data () {
+        return {
+            user: ''
+        }
+    },
+    computed: {
+        posts () {
+            return this.$store.getters.getPosts
+        }
+    },
+    methods: {
+        ...mapActions([
+            'initPostsAction'
+        ])
+    },
+    mounted () {
         
+    },
+    created() {
+        const isAuthenticated = JSON.parse(localStorage.getItem('authenticatedUser'))
+        this.user = isAuthenticated
+        this.$store.dispatch('initPostsAction')
     }
 
 }

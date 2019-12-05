@@ -7,10 +7,10 @@
 
         <div class="post">
             <div class="post-header">
-                <span>{{ this.$store.state.name }}</span> @joaoaires - 1h
+                <span>{{ postData.user.name }}</span> @{{ postData.user.username }} - {{ postData.created_at }}
             </div>
             <div class="post-content">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quia fuga a veniam, eligendi distinctio ex et iste minima magni nesciunt unde ad nobis sequi culpa tenetur nostrum obcaecati similique quibusdam.
+                {{ postData.text }}                
             </div>            
         </div>
 
@@ -19,10 +19,19 @@
 
 <script>
 import { mapActions } from 'vuex'
+import { log } from 'util'
 
 export default {
+    props: ['post'],
+    data() {
+        return {
+            postData: ''
+        }
+    },
     created () {
-        this.$store.dispatch('changeNameAction', 'Joao')
+        log('qq', this.post)
+        this.postData = this.post
+
     },
     methods: {
         ...mapActions([
