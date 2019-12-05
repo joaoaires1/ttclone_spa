@@ -28,6 +28,9 @@ export default new Vuex.Store({
         },
         clearPosts (state) {
             state.posts = []
+        },
+        addPost ( state, payload ) {
+            state.posts.unshift(payload)
         }   
     },
     actions: {
@@ -51,7 +54,7 @@ export default new Vuex.Store({
         },
         addPostAction ({ commit }, post) 
         {
-            commit('initPosts', post)
+            commit('addPost', post)
         },
         clearPostsAction ({ commit }) {
             commit('clearPosts')

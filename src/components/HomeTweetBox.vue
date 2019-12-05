@@ -45,8 +45,9 @@ export default {
                 api_token: this.user.api_token,
                 text: this.postContent
             }).then(res => {
-
-                this.$store.dispatch('addPostAction', [res.data])
+                
+                this.postContent = ''
+                this.$store.dispatch('addPostAction', res.data)
 
             }).catch(err => log(err))
         }

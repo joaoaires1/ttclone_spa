@@ -29,7 +29,6 @@ import HomeTweetBox from '../components/HomeTweetBox'
 import Search from '../components/Search'
 import TimeLinePost from '../components/TimeLinePost'
 import { mapActions } from 'vuex'
-// import { log } from 'util'
 
 export default {
 
@@ -74,7 +73,7 @@ export default {
 
 .content {
     width: 100%;
-    height: 100vh;
+    height: 100%;
     max-width: 1200px;
     display: flex;
     justify-content: center;

@@ -7,7 +7,7 @@
 
         <div class="post">
             <div class="post-header">
-                <span>{{ postData.user.name }}</span> @{{ postData.user.username }} - {{ postData.created_at }}
+                <span>{{ postData.user.name }}</span> @{{ postData.user.username }} - {{ timeOfPost }}
             </div>
             <div class="post-content">
                 {{ postData.text }}                
@@ -19,12 +19,37 @@
 
 <script>
 import { mapActions } from 'vuex'
+import moment from 'moment'
 
 export default {
     props: ['post'],
     data() {
         return {
             postData: ''
+        }
+    },
+    computed: {
+        timeOfPost () {
+            let date = moment(this.postData.created_at).format("YYYY-MM-DD HH:mm:ss")
+            let now = moment()
+            let dif = now.diff(date, 'minutes')
+
+            if (dif == 0) {
+                dif = now.diff(date, 'seconds')
+                return `${dif} sec`
+            }
+
+            if ( dif < 60 ) {
+                return `${dif} min`
+            } else {
+                dif = dif / 60
+
+                if ( dif > 24 ) {
+                    return moment(this.postData.created_at).format("YYYY-MM-DD")
+                }
+
+                return `${Math.round(dif)} h`
+            }
         }
     },
     created () {
