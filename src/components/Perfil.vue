@@ -11,6 +11,9 @@
                 
                 <div class="separator"></div>
                
+                <div v-for="post in this.posts" :key="post.id">
+                    <timiline-post :post="post" />
+                </div>
             </div>
 
             <div class="right-section">
@@ -27,13 +30,30 @@
 import LeftSection from '../components/LeftSection'
 import Search from '../components/Search'
 import PerfilStatsBox from '../components/PerfilStatsBox'
+import TimeLinePost from '../components/TimeLinePost'
+import { mapActions } from 'vuex'
+// import { log } from 'util'
 
 export default {
 
     components: {
         'left-section': LeftSection,
         'search': Search,
-        'stats-box': PerfilStatsBox
+        'stats-box': PerfilStatsBox,
+        'timiline-post': TimeLinePost
+    },
+    computed: {
+        posts () {
+            return this.$store.getters.getPosts
+        }
+    },
+    methods: {
+        ...mapActions([
+            'initPostsAction'
+        ])
+    },
+    created() {
+        this.$store.dispatch('initPostsAction')
     }
 
 }

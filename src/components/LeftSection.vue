@@ -7,18 +7,18 @@
 
         <div class="nav">
 
-            <div>
+            <div class="nav-link" @click="navigate('home')">
                 <img src="../assets/home-icon.svg" width="30px" alt="">
                 <p class="nav-text">Home Page</p>
             </div>
-            <div>
+            <div class="nav-link" @click="navigate('perfil')" >
                 <img src="../assets/avatar.png" class="nav-avatar" width="30px" alt="">
                 <p class="nav-text">Perfil</p>
             </div>
-            <div class="logout">
+            <div class="logout nav-link">
                 <button @click="doLogout" >sair</button>
             </div>
-            <div class="nav-tweet">
+            <div class="nav-tweet nav-link">
                 <button>Tweet</button>
             </div>
 
@@ -52,6 +52,9 @@ export default {
                 this.$router.push('login')
             })
 
+        },
+        navigate(route) {
+            this.$router.push(route).catch(() => {})
         }
     },
     created () {
@@ -65,6 +68,8 @@ export default {
 
 .left-section {
     width: 25%;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 .logo {
@@ -101,7 +106,7 @@ export default {
     color: #FFF;
     font-size: 16px;
     font-weight: bold;
-    letter-spacing: 0.05em
+    letter-spacing: 0.05em;
 }
 
 .logout button{
@@ -112,6 +117,10 @@ export default {
     color: #FFF;
     font-weight: bold;
     letter-spacing: 0.05em
+}
+
+.nav-link, .nav-link button {
+    cursor: pointer;
 }
 
 </style>

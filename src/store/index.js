@@ -46,11 +46,15 @@ export default new Vuex.Store({
                 api_token: isAuthenticated.api_token
             } })
             .then(res => {
-
+                
+                if (res.data.posts.length == this.state.posts.length) return
                 commit('initPosts', res.data.posts)
 
             })
-            .catch(err => log(err)) 
+            .catch(err => {
+                localStorage.setItem('authenticatedUser', null)
+                log(err)
+            }) 
         },
         addPostAction ({ commit }, post) 
         {
