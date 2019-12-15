@@ -11,6 +11,10 @@
                 <img src="../assets/home-icon.svg" width="30px" alt="">
                 <p class="nav-text">Home Page</p>
             </div>
+            <div class="nav-link" @click="navigate('explore')">
+                <img src="../assets/hashtag.svg" width="30px" alt="">
+                <p class="nav-text">Explore</p>
+            </div>
             <div class="nav-link" @click="navigate('perfil')" >
                 <img src="../assets/avatar.png" class="nav-avatar" width="30px" alt="">
                 <p class="nav-text">Perfil</p>

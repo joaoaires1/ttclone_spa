@@ -8,11 +8,15 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         name: "",
-        posts: []
+        posts: [],
+        exploreResults: []
     },
     getters: {
         getPosts: state => {
             return state.posts
+        },
+        getExploreResults: state => {
+            return state.exploreResults
         }
     },
     mutations: {
@@ -31,7 +35,10 @@ export default new Vuex.Store({
         },
         addPost ( state, payload ) {
             state.posts.unshift(payload)
-        }   
+        },
+        setExploreResults ( state, payload ) {
+            state.exploreResults = payload
+        }  
     },
     actions: {
         changeNameAction ({ commit }, name) {
@@ -62,6 +69,9 @@ export default new Vuex.Store({
         },
         clearPostsAction ({ commit }) {
             commit('clearPosts')
+        },
+        setExploreResultsAction ({ commit }, results) {
+            commit('setExploreResults', results)
         }
     }
 })

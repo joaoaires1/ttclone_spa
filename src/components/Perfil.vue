@@ -17,7 +17,7 @@
             </div>
 
             <div class="right-section">
-                <search />
+                <search page="perfil" />
             </div>
 
         </div>

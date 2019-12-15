@@ -4,6 +4,7 @@ import Login from '../components/Login'
 import Register from '../components/Register'
 import Home from '../components/Home'
 import Perfil from '../components/Perfil'
+import Explore from '../components/Explore'
 
 Vue.use(VueRouter)
 
@@ -60,6 +61,14 @@ const routes = [
         name: 'perfil',
         path: '/perfil',
         component: Perfil,
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
+        name: 'explore',
+        path: '/explore',
+        component: Explore,
         meta: {
             requiresAuth: true
         }

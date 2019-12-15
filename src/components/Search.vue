@@ -4,11 +4,11 @@
             <span>
                 <img src="../assets/lupa.svg" width="20px" alt="">
             </span>
-            <input v-model="name" @keyup="getUsers" type="text" placeholder="Search on Twitter">
+            <input v-model="name" @keyup="getUsers" @keyup.enter="submitSearch" type="text" placeholder="Search on Twitter">
         </div>
 
-        <div v-if="results.length > 0" class="results">
-            <div class="result-row" v-for="item in results" :key="item.id">
+        <div v-if="getExploreResults.length > 0" class="results">
+            <div v-show="show" class="result-row" v-for="item in getExploreResults" :key="item.id">
                 <div class="result-avatar">
                     <img src="../assets/avatar.png" alt="">
                 </div>
@@ -22,16 +22,28 @@
 </template>
 
 <script>
+// import { log } from 'util'
+import { mapActions, mapGetters } from 'vuex'
+
 export default {
 
+    props: ['page'],
     data() {
         return {
             user: '',
             name: '',
-            results: []
+            show: true
         }
     },
+    computed: {
+        ...mapGetters([
+            'getExploreResults'
+        ]),
+    },
     methods: {
+        ...mapActions([
+            'setExploreResultsAction'
+        ]),
         getUsers () {
 
             if ( this.name.length > 0 ) {
@@ -41,17 +53,32 @@ export default {
                     name: this.name
                 } })
                 .then( res => {
-                    this.results = res.data
+                    this.$store.dispatch('setExploreResultsAction', res.data)
                 } )
             } else {
-                this.results = []
+                this.$store.dispatch('setExploreResultsAction', [])
             }
             
+        },
+        submitSearch () {
+            this.show = false
+            this.name = ""
+            if ( this.page != 'explore' ) {
+                this.$router.push('explore')
+            }
+
         }
     },
     created() {
         const isAuthenticated = JSON.parse(localStorage.getItem('authenticatedUser'))
         this.user = isAuthenticated
+        this.$store.dispatch('setExploreResultsAction', [])
+
+        if ( this.page == 'explore' ) {
+            this.show = false
+        } else {
+            this.show = true
+        }
     }
 
 }
@@ -87,6 +114,9 @@ export default {
 .results {
     border: 1px solid #eee;
     border-radius: 5px;
+    position: absolute;
+    background: #fff;
+    z-index: 10;
 }
 
 .result-row {

@@ -14,7 +14,7 @@
             </div>
 
             <div class="right-section">
-                <search />
+                <search page="home" />
             </div>
 
         </div>
