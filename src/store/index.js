@@ -9,7 +9,8 @@ export default new Vuex.Store({
     state: {
         name: "",
         posts: [],
-        exploreResults: []
+        exploreResults: [],
+        showEditPerfilModal: false
     },
     getters: {
         getPosts: state => {
@@ -17,6 +18,9 @@ export default new Vuex.Store({
         },
         getExploreResults: state => {
             return state.exploreResults
+        },
+        getShowEditPerfilModal: state => {
+            return state.showEditPerfilModal
         }
     },
     mutations: {
@@ -38,6 +42,9 @@ export default new Vuex.Store({
         },
         setExploreResults ( state, payload ) {
             state.exploreResults = payload
+        },
+        changeShowEditPerfilModal ( state, payload ) {
+            state.showEditPerfilModal = payload
         }  
     },
     actions: {

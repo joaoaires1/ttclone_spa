@@ -22,6 +22,8 @@
 
         </div>
 
+        <modal />
+
     </div>
 </template>
 
@@ -31,6 +33,7 @@ import LeftSection from '../components/LeftSection'
 import Search from '../components/Search'
 import PerfilStatsBox from '../components/PerfilStatsBox'
 import TimeLinePost from '../components/TimeLinePost'
+import EditPerfilModal from '../components/EditPerfilModal'
 import { mapActions } from 'vuex'
 // import { log } from 'util'
 
@@ -40,7 +43,8 @@ export default {
         'left-section': LeftSection,
         'search': Search,
         'stats-box': PerfilStatsBox,
-        'timiline-post': TimeLinePost
+        'timiline-post': TimeLinePost,
+        'modal': EditPerfilModal
     },
     computed: {
         posts () {

@@ -15,7 +15,7 @@
             </div>
             <div class="stats-section">
                 <div class="edit-button-div">
-                    <button>Edit Perfil</button>
+                    <button @click="changeShowEditPerfilModal(true)">Edit Perfil</button>
                 </div>
                 <div class="name-div">
                     <h3>Joao Aires</h3>
@@ -34,7 +34,15 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
+
 export default {
+
+    methods: {
+        ...mapMutations([
+            'changeShowEditPerfilModal'
+        ]),
+    }
 
 }
 </script>
