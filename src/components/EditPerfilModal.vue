@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 import 'cropperjs/dist/cropper.css';
 import Cropper from 'cropperjs';
 import { log } from 'util';
@@ -87,6 +87,9 @@ export default {
     methods: {
         ...mapMutations([
             'changeShowEditPerfilModal'
+        ]),
+        ...mapActions([
+            'userDataAction', 'initPostsAction'
         ]),
         onFileChange(e) {
             var files = e.target.files;
@@ -130,15 +133,25 @@ export default {
         submitEditPerfil () {
             const formData = new FormData()
 
+            if (this.selectedFile)
+                formData.append('photo', this.selectedFile)
+
             formData.append('id', this.user.id)
             formData.append('api_token', this.user.api_token)
-            formData.append('photo', this.selectedFile)
             formData.append('name', 'qweqw')
 
             this.$http.post('/edit_perfil', formData)
             .then( res => {
-                log(res.data)
+                let user = this.$helper.getStorageUserData()
+                let { data } = res
+
+                user.avatar = data.user.avatar
+                this.$store.dispatch('userDataAction', user)
+                this.$store.dispatch('initPostsAction')
+                this.$helper.setStorageUserData(user)
+
             })
+            .catch(err => log(err))
         }
     },
     computed: {

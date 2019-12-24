@@ -13,6 +13,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+// import { log } from 'util'
 
 export default {
     data () {
@@ -35,21 +37,20 @@ export default {
                     password: this.password 
                 })
                 .then(res => {
+
                     let { data } = res
+                    let parsed = JSON.stringify(data)
 
-                    this.userData.id        = data.id
-                    this.userData.name      = data.name
-                    this.userData.username  = data.username
-                    this.userData.email     = data.email
-                    this.userData.api_token = data.api_token
-
-                    let parsed = JSON.stringify(this.userData)
+                    this.$store.dispatch('userDataAction', data)
 
                     localStorage.setItem('authenticatedUser', parsed)
 
                     this.$router.push('home')
                 })
-        }
+        },
+        ...mapActions([
+            'userDataAction'
+        ])
     },
     created () {
 

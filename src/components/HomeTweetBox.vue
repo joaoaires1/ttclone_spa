@@ -8,7 +8,7 @@
         <div class="tweet">
 
             <div class="tweet-avatar">
-                <img src="../assets/avatar.png" alt="">
+                <img :src="getUserData.avatar" alt="">
             </div>
 
             <div class="tweet-text">
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import { log } from 'util'
 export default {
 
@@ -52,9 +52,14 @@ export default {
             }).catch(err => log(err))
         }
     },
+    computed: {
+        ...mapGetters([
+            'getUserData'
+        ])
+    },
     created () {
-        const isAuthenticated = JSON.parse(localStorage.getItem('authenticatedUser'))
-        this.user = isAuthenticated
+        this.$store.dispatch('userDataAction', this.$helper.getStorageUserData())
+        this.user = this.$helper.getStorageUserData()
     }
 
 }

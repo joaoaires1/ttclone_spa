@@ -10,7 +10,8 @@ export default new Vuex.Store({
         name: "",
         posts: [],
         exploreResults: [],
-        showEditPerfilModal: false
+        showEditPerfilModal: false,
+        userData: null
     },
     getters: {
         getPosts: state => {
@@ -21,6 +22,9 @@ export default new Vuex.Store({
         },
         getShowEditPerfilModal: state => {
             return state.showEditPerfilModal
+        },
+        getUserData: state => {
+            return state.userData
         }
     },
     mutations: {
@@ -45,6 +49,9 @@ export default new Vuex.Store({
         },
         changeShowEditPerfilModal ( state, payload ) {
             state.showEditPerfilModal = payload
+        },
+        userData ( state, payload ) {
+            state.userData = payload
         }  
     },
     actions: {
@@ -79,6 +86,9 @@ export default new Vuex.Store({
         },
         setExploreResultsAction ({ commit }, results) {
             commit('setExploreResults', results)
+        },
+        userDataAction ({ commit }, user) {
+            commit('userData', user)
         }
     }
 })

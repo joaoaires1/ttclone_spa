@@ -2,7 +2,7 @@
     <div class="timeline-post">
 
         <div class="post-avatar">
-            <img src="../assets/avatar.png" alt="">
+            <img :src="postData.user.avatar" alt="">
         </div>
 
         <div class="post">

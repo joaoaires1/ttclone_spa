@@ -8,7 +8,7 @@
             <div class="main-section">
                 <tweet-box />
                 <div class="separator"></div>
-                <div v-for="post in this.posts" :key="post.id">
+                <div v-for="post in getPosts" :key="post.id">
                     <timiline-post :post="post" />
                 </div>
             </div>
@@ -28,7 +28,7 @@ import LeftSection from '../components/LeftSection'
 import HomeTweetBox from '../components/HomeTweetBox'
 import Search from '../components/Search'
 import TimeLinePost from '../components/TimeLinePost'
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
 
@@ -44,9 +44,9 @@ export default {
         }
     },
     computed: {
-        posts () {
-            return this.$store.getters.getPosts
-        }
+        ...mapGetters([
+            'getPosts'
+        ])
     },
     methods: {
         ...mapActions([
@@ -54,7 +54,7 @@ export default {
         ])
     },
     mounted () {
-        
+
     },
     created() {
         this.$store.dispatch('initPostsAction')

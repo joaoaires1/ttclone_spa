@@ -8,7 +8,7 @@
 
         <div class="stats-content">
             <div class="stats-avatar">
-                <img src="../assets/avatar.png" alt="">
+                <img :src="this.getUserData.avatar" alt="">
             </div>
             <div class="cover-img">
 
@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapMutations, mapGetters, mapActions } from 'vuex'
 
 export default {
 
@@ -42,6 +42,17 @@ export default {
         ...mapMutations([
             'changeShowEditPerfilModal'
         ]),
+        ...mapActions([
+            'userDataAction'
+        ])
+    },
+    computed: {
+        ...mapGetters([
+            'getUserData'
+        ])
+    },
+    created () {
+        this.$store.dispatch('userDataAction', this.$helper.getStorageUserData())
     }
 
 }
