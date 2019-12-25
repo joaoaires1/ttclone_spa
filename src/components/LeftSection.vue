@@ -16,7 +16,7 @@
                 <p class="nav-text">Explore</p>
             </div>
             <div class="nav-link" @click="navigate('perfil')" >
-                <img src="../assets/avatar.png" class="nav-avatar" width="30px" alt="">
+                <img :src="getUserData.avatar" class="nav-avatar" width="30px" alt="">
                 <p class="nav-text">Perfil</p>
             </div>
             <div class="logout nav-link">
@@ -33,7 +33,8 @@
 
 <script>
 
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
+// import { log } from 'util'
 
 export default {
     data () {
@@ -60,6 +61,11 @@ export default {
         navigate(route) {
             this.$router.push(route).catch(() => {})
         }
+    },
+    computed: {
+        ...mapGetters([
+            'getUserData'
+        ])
     },
     created () {
         this.user = JSON.parse(localStorage.getItem('authenticatedUser'))

@@ -7,10 +7,10 @@
 
             <div class="main-section">
                 <tweet-box />
+
                 <div class="separator"></div>
-                <div v-for="post in getPosts" :key="post.id">
-                    <timiline-post :post="post" />
-                </div>
+                
+                <timiline-post />
             </div>
 
             <div class="right-section">

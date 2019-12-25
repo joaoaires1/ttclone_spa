@@ -5,6 +5,8 @@ import Register from '../components/Register'
 import Home from '../components/Home'
 import Perfil from '../components/Perfil'
 import Explore from '../components/Explore'
+import * as helper from '../utils/helpers'
+import store from '../store'
 
 Vue.use(VueRouter)
 
@@ -79,11 +81,12 @@ const router = new VueRouter({ mode: 'history', routes })
 
 router.beforeEach((to, from, next) => {
     const requiresAuth = to.matched.some(record  => record.meta.requiresAuth)
-    const isAuthenticated = JSON.parse(localStorage.getItem('authenticatedUser'))
+    const isAuthenticated = helper.getStorageUserData()
     
     if (requiresAuth && !isAuthenticated) {
         next('/login')
     } else {
+        store.dispatch('userDataAction', isAuthenticated)
         next()
     }
 })

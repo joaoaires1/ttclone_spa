@@ -160,8 +160,11 @@ export default {
         ]),
     },
     created () {
-        const isAuthenticated = JSON.parse(localStorage.getItem('authenticatedUser'))
-        this.user = isAuthenticated
+        this.user = this.$helper.getStorageUserData()
+
+        if (this.user.avatar) {
+            this.urlImage = `url(${this.user.avatar})`
+        }
     }
 
 }

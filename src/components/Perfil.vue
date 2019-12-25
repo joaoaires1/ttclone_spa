@@ -10,10 +10,9 @@
                 <stats-box />
                 
                 <div class="separator"></div>
-               
-                <div v-for="post in this.posts" :key="post.id">
-                    <timiline-post :post="post" />
-                </div>
+
+                <timiline-post />
+
             </div>
 
             <div class="right-section">

@@ -8,7 +8,7 @@
 
         <div class="stats-content">
             <div class="stats-avatar">
-                <img :src="this.getUserData.avatar" alt="">
+                <img :src="getUserData.avatar" alt="">
             </div>
             <div class="cover-img">
 
@@ -52,7 +52,7 @@ export default {
         ])
     },
     created () {
-        this.$store.dispatch('userDataAction', this.$helper.getStorageUserData())
+        
     }
 
 }
@@ -109,7 +109,7 @@ export default {
 .stats-avatar img {
     width: 120px;
     height: 120px;
-    border: 1px solid red;
+    border: 4px solid #fff;
     border-radius: 150px;
 }
 

@@ -1,25 +1,28 @@
 <template>
-    <div class="timeline-post">
+    <div>
+        <div v-for="post in getPosts" :key="post.id" class="timeline-post">
 
-        <div class="post-avatar">
-            <img :src="postData.user.avatar" alt="">
-        </div>
-
-        <div class="post">
-            <div class="post-header">
-                <span>{{ postData.user.name }}</span> @{{ postData.user.username }} - {{ timeOfPost }}
+            <div class="post-avatar">
+                <img v-if="getUserData.id == post.user.id" :src="getUserData.avatar" alt="">
+                <img v-else :src="post.user.avatar" alt="">
             </div>
-            <div class="post-content">
-                {{ postData.text }}                
-            </div>            
-        </div>
 
+            <div class="post">
+                <div class="post-header">
+                    <span>{{ post.user.name }}</span> @{{ post.user.username }}
+                </div>
+                <div class="post-content">
+                    {{ post.text }}                
+                </div>            
+            </div>
+
+        </div>
     </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
-import moment from 'moment'
+import { mapActions, mapGetters } from 'vuex'
+// import moment from 'moment'
 
 export default {
     props: ['post'],
@@ -30,30 +33,34 @@ export default {
     },
     computed: {
         timeOfPost () {
-            let date = moment(this.postData.created_at).format("YYYY-MM-DD HH:mm:ss")
-            let now = moment()
-            let dif = now.diff(date, 'minutes')
+            // let date = moment(this.postData.created_at).format("YYYY-MM-DD HH:mm:ss")
+            // let now = moment()
+            // let dif = now.diff(date, 'minutes')
 
-            if (dif == 0) {
-                dif = now.diff(date, 'seconds')
-                return `${dif} sec`
-            }
+            // if (dif == 0) {
+            //     dif = now.diff(date, 'seconds')
+            //     return `${dif} sec`
+            // }
 
-            if ( dif < 60 ) {
-                return `${dif} min`
-            } else {
-                dif = dif / 60
+            // if ( dif < 60 ) {
+            //     return `${dif} min`
+            // } else {
+            //     dif = dif / 60
 
-                if ( dif > 24 ) {
-                    return moment(this.postData.created_at).format("YYYY-MM-DD")
-                }
+            //     if ( dif > 24 ) {
+            //         return moment(this.postData.created_at).format("YYYY-MM-DD")
+            //     }
 
-                return `${Math.round(dif)} h`
-            }
-        }
+            //     return `${Math.round(dif)} h`
+            // }
+            return ''
+        },
+        ...mapGetters([
+            'getPosts', 'getUserData'
+        ])
     },
     created () {
-        this.postData = this.post
+        // this.postData = this.post
     },
     methods: {
         ...mapActions([
