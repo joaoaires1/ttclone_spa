@@ -8,18 +8,20 @@
 
         <div class="stats-content">
             <div class="stats-avatar">
-                <img :src="getUserData.avatar" alt="">
+                <img v-if="ownperfil" :src="getUserData.avatar" alt="">
+                <img v-else :src="user.avatar" alt="">
             </div>
             <div class="cover-img">
 
             </div>
             <div class="stats-section">
                 <div class="edit-button-div">
-                    <button @click="changeShowEditPerfilModal(true)">Edit Perfil</button>
+                    <button v-if="ownperfil" @click="changeShowEditPerfilModal(true)">Edit Perfil</button>
+                    <button v-else>Seguir</button>
                 </div>
                 <div class="name-div">
-                    <h3>Joao Aires</h3>
-                    <p>@joaoaires</p>
+                    <h3>{{ user.name }}</h3>
+                    <p>@{{ user.username }}</p>
                 </div>
                 <div class="since-div">
                     <p>Ingressou em outubro de 2016</p>
@@ -37,7 +39,7 @@
 import { mapMutations, mapGetters, mapActions } from 'vuex'
 
 export default {
-
+    props: ['ownperfil', 'user'],
     methods: {
         ...mapMutations([
             'changeShowEditPerfilModal'
@@ -52,7 +54,7 @@ export default {
         ])
     },
     created () {
-        
+
     }
 
 }

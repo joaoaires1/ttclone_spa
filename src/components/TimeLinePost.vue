@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-for="post in getPosts" :key="post.id" class="timeline-post">
+        <div v-for="post in (page == 'perfil' ? getPerfilPosts : getPosts)" :key="post.id" class="timeline-post">
 
             <div class="post-avatar">
                 <img v-if="getUserData.id == post.user.id" :src="getUserData.avatar" alt="">
@@ -22,11 +22,10 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import { log } from 'util'
 import moment from 'moment'
 
 export default {
-    props: ['post'],
+    props: ['page'],
     data() {
         return {
             postData: '',
@@ -35,7 +34,7 @@ export default {
     },
     computed: {
         ...mapGetters([
-            'getPosts', 'getUserData'
+            'getPosts', 'getUserData', 'getPerfilPosts'
         ])
     },
     filters: {
@@ -70,7 +69,7 @@ export default {
         ])
     },
     mounted () {
-        log(this.getPosts)
+        
     }
 }
 </script>

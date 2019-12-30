@@ -5,14 +5,18 @@
 
             <left-section />
 
-            <div class="main-section">
+            <div v-if="perfilExists" class="main-section">
 
-                <stats-box />
+                <stats-box :ownperfil="ownPerfil" :user="user" />
                 
                 <div class="separator"></div>
 
-                <timiline-post />
+                <timiline-post page="perfil" />
 
+            </div>
+
+            <div v-else class="main-section">
+                <h1>Página não existe</h1>
             </div>
 
             <div class="right-section">
@@ -33,8 +37,7 @@ import Search from '../components/Search'
 import PerfilStatsBox from '../components/PerfilStatsBox'
 import TimeLinePost from '../components/TimeLinePost'
 import EditPerfilModal from '../components/EditPerfilModal'
-import { mapActions } from 'vuex'
-// import { log } from 'util'
+import { mapActions, mapGetters, mapMutations } from 'vuex'
 
 export default {
 
@@ -45,18 +48,50 @@ export default {
         'timiline-post': TimeLinePost,
         'modal': EditPerfilModal
     },
-    computed: {
-        posts () {
-            return this.$store.getters.getPosts
+    data () {
+        return {
+            perfilExists: false,
+            ownPerfil: false,
+            user: null
         }
+    },
+    computed: {
+        ...mapGetters([
+            'getUserData'
+        ])
     },
     methods: {
         ...mapActions([
-            'initPostsAction'
+            'initPostsAction', 'actionPerfilPosts'
+        ]),
+        ...mapMutations([
+            'mutatePerfilPosts'
         ])
     },
     created() {
-        this.$store.dispatch('initPostsAction')
+
+        this.$http.get('/get_perfil', { 
+            params: {
+                id: this.getUserData.id,
+                api_token: this.getUserData.api_token,
+                username: this.$route.params.username
+            }
+        })
+        .then(res => {
+            
+            if (res.data.success) {
+                this.perfilExists = true
+                this.user = res.data.user
+
+                if ( res.data.user.username == this.getUserData.username ) {
+                    this.ownPerfil = true
+                } 
+            }
+                       
+
+        })
+
+        this.$store.dispatch('actionPerfilPosts', this.$route.params.username)
     }
 
 }
@@ -82,6 +117,10 @@ export default {
     width: 50%;
     border-left: 1px solid #e5ffe5;
     border-right: 1px solid #e5ffe5;
+}
+
+.main-section h1 {
+    text-align: center;
 }
 
 .right-section {

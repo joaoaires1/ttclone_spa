@@ -11,7 +11,8 @@ export default new Vuex.Store({
         posts: [],
         exploreResults: [],
         showEditPerfilModal: false,
-        userData: null
+        userData: null,
+        perfilPosts: []
     },
     getters: {
         getPosts: state => {
@@ -25,6 +26,9 @@ export default new Vuex.Store({
         },
         getUserData: state => {
             return state.userData
+        },
+        getPerfilPosts: state => {
+            return state.perfilPosts
         }
     },
     mutations: {
@@ -52,6 +56,9 @@ export default new Vuex.Store({
         },
         userData ( state, payload ) {
             state.userData = payload
+        },
+        mutatePerfilPosts ( state, payload ) {
+            state.perfilPosts = payload
         }  
     },
     actions: {
@@ -89,6 +96,23 @@ export default new Vuex.Store({
         },
         userDataAction ({ commit }, user) {
             commit('userData', user)
+        },
+        async actionPerfilPosts ({ commit }, username)
+        {
+            let isAuthenticated = JSON.parse(localStorage.getItem('authenticatedUser'))
+
+            await axios.get('http://127.0.0.1:8000/api/posts_by_username', {
+                params: {
+                    id: isAuthenticated.id,
+                    api_token: isAuthenticated.api_token,
+                    username: username
+                }
+            })
+            .then(res => {
+                
+                commit('mutatePerfilPosts', res.data.posts)
+                
+            })
         }
     }
 })

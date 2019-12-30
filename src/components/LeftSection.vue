@@ -15,7 +15,7 @@
                 <img src="../assets/hashtag.svg" width="30px" alt="">
                 <p class="nav-text">Explore</p>
             </div>
-            <div class="nav-link" @click="navigate('perfil')" >
+            <div class="nav-link" @click="navigate(getUserData.username)" >
                 <img :src="getUserData.avatar" class="nav-avatar" width="30px" alt="">
                 <p class="nav-text">Perfil</p>
             </div>

@@ -3,10 +3,12 @@ import VueRouter from 'vue-router'
 import Login from '../components/Login'
 import Register from '../components/Register'
 import Home from '../components/Home'
-import Perfil from '../components/Perfil'
+// import Perfil from '../components/Perfil'
 import Explore from '../components/Explore'
 import * as helper from '../utils/helpers'
 import store from '../store'
+
+const Perfil = () => import('../components/Perfil')
 
 Vue.use(VueRouter)
 
@@ -60,17 +62,17 @@ const routes = [
         }
     },
     {
-        name: 'perfil',
-        path: '/perfil',
-        component: Perfil,
+        name: 'explore',
+        path: '/explore',
+        component: Explore,
         meta: {
             requiresAuth: true
         }
     },
     {
-        name: 'explore',
-        path: '/explore',
-        component: Explore,
+        name: 'perfil',
+        path: '/:username',
+        component: Perfil,
         meta: {
             requiresAuth: true
         }
