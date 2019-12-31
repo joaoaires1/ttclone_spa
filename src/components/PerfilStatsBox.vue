@@ -17,7 +17,7 @@
             <div class="stats-section">
                 <div class="edit-button-div">
                     <button v-if="ownperfil" @click="changeShowEditPerfilModal(true)">Edit Perfil</button>
-                    <button v-else>Seguir</button>
+                    <button v-else @click="followUser">{{ is_following ? 'Seguindo' : 'Seguir' }}</button>
                 </div>
                 <div class="name-div">
                     <h3>{{ user.name }}</h3>
@@ -39,22 +39,57 @@
 import { mapMutations, mapGetters, mapActions } from 'vuex'
 
 export default {
-    props: ['ownperfil', 'user'],
+    props: ['ownperfil', 'user', 'isfollowing'],
+    data () {
+        return {
+            is_following: ''
+        }
+    },
     methods: {
         ...mapMutations([
             'changeShowEditPerfilModal'
         ]),
         ...mapActions([
             'userDataAction'
-        ])
+        ]),
+        followUser () {
+
+            if ( !this.is_following ) {
+                this.$http.post('/follow', {
+                    id: this.getUserData.id,
+                    api_token: this.getUserData.api_token,
+                    followed_id: this.user.id
+                })
+                .then(res => {
+                    if (res.data.success)
+                        this.is_following = true
+                })
+            } else {
+                this.$http.delete(`/follow/${this.user.id}`, {
+                    params: {
+                        id: this.getUserData.id,
+                        api_token: this.getUserData.api_token
+                    }
+                })
+                .then(res => {
+                    if (res.data.success)
+                        this.is_following = false
+                })
+            }
+            
+
+        }
     },
     computed: {
         ...mapGetters([
             'getUserData'
         ])
     },
+    mounted () {
+        
+    },
     created () {
-
+        this.is_following = this.isfollowing
     }
 
 }

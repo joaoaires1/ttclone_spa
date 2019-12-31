@@ -7,7 +7,7 @@
 
             <div v-if="perfilExists" class="main-section">
 
-                <stats-box :ownperfil="ownPerfil" :user="user" />
+                <stats-box :ownperfil="ownPerfil" :user="user" :isfollowing="isfollowing" />
                 
                 <div class="separator"></div>
 
@@ -52,7 +52,8 @@ export default {
         return {
             perfilExists: false,
             ownPerfil: false,
-            user: null
+            user: null,
+            isfollowing: ''
         }
     },
     computed: {
@@ -82,6 +83,7 @@ export default {
             if (res.data.success) {
                 this.perfilExists = true
                 this.user = res.data.user
+                this.isfollowing = res.data.isfollowing
 
                 if ( res.data.user.username == this.getUserData.username ) {
                     this.ownPerfil = true
