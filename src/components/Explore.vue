@@ -35,7 +35,7 @@
             </div>
 
             <div class="right-section">
-                
+                <h3>Quem seguir</h3>
             </div>
 
         </div>
@@ -121,6 +121,11 @@ export default {
     display: flex;
     padding: 10px;
     border-bottom: 1px solid #eee;
+}
+
+.right-section {
+    width: 25%;
+    padding: 12px;
 }
 
 </style>
