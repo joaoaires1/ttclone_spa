@@ -8,7 +8,7 @@
         </div>
 
         <div v-if="getExploreResults.length > 0" class="results">
-            <div v-show="show" class="result-row" v-for="item in getExploreResults" :key="item.id">
+            <div v-show="show" class="result-row" v-for="item in getExploreResults" :key="item.id" @click="navigate(item.username)">
                 <div class="result-avatar">
                     <img src="../assets/avatar.png" alt="">
                 </div>
@@ -67,6 +67,9 @@ export default {
                 this.$router.push('explore')
             }
 
+        },
+        navigate(route) {
+            this.$router.push(route).catch(() => {})
         }
     },
     created() {

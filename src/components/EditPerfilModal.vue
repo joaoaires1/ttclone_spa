@@ -45,7 +45,7 @@
                                         Name
                                     </label>
                                     <div>
-                                        <input type="text" id="name" placeholder="Name" >
+                                        <input v-model="name" type="text" id="name" placeholder="Name" >
                                     </div>
                                 </div>
                             </div>
@@ -81,7 +81,8 @@ export default {
             color: 'red',
             avatar: '',
             change: false,
-            ht: '0px'
+            ht: '0px',
+            name: ''
         }
     },
     methods: {
@@ -138,7 +139,7 @@ export default {
 
             formData.append('id', this.user.id)
             formData.append('api_token', this.user.api_token)
-            formData.append('name', 'qweqw')
+            formData.append('name', this.name)
 
             this.$http.post('/edit_perfil', formData)
             .then( res => {
@@ -146,6 +147,7 @@ export default {
                 let { data } = res
 
                 user.avatar = data.user.avatar
+                user.name = data.user.name
                 this.$store.dispatch('userDataAction', user)
                 this.$store.dispatch('initPostsAction')
                 this.$helper.setStorageUserData(user)
@@ -161,6 +163,7 @@ export default {
     },
     created () {
         this.user = this.$helper.getStorageUserData()
+        this.name = this.user.name
 
         if (this.user.avatar) {
             this.urlImage = `url(${this.user.avatar})`

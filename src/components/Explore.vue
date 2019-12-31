@@ -20,7 +20,7 @@
 
                 <div v-if="getExploreResults.length > 0">
 
-                    <div class="result-explore" v-for="item in getExploreResults" :key="item.id">
+                    <div class="result-explore" v-for="item in getExploreResults" :key="item.id" @click="navigate(item.username)">
                         <div class="result-avatar">
                             <img src="../assets/avatar.png" alt="">
                         </div>
@@ -35,7 +35,9 @@
             </div>
 
             <div class="right-section">
-                <h3>Quem seguir</h3>
+                <div class="who-follows">
+                    <h3>Who to follow</h3>
+                </div>
             </div>
 
         </div>
@@ -67,7 +69,9 @@ export default {
         ])
     },
     methods: {
-
+        navigate(route) {
+            this.$router.push(route).catch(() => {})
+        }
     },
     mounted () {
 
@@ -126,6 +130,12 @@ export default {
 .right-section {
     width: 25%;
     padding: 12px;
+}
+
+.who-follows {
+    padding: 10px;
+    border-radius: 10px;
+    background: rgb(245, 248, 250);;
 }
 
 </style>

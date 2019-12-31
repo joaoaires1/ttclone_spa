@@ -2,32 +2,32 @@
     <div>
 
         <div class="stats-header">
-            <h3>João Aires</h3>
-            <p> 10 tweets </p>
+            <h3>{{ getPerfilData.user.name }}</h3>
+            <p> {{ getPerfilData.posts }} tweets </p>
         </div>
 
         <div class="stats-content">
             <div class="stats-avatar">
-                <img v-if="ownperfil" :src="getUserData.avatar" alt="">
-                <img v-else :src="user.avatar" alt="">
+                <img v-if="getPerfilData.ownperfil" :src="getUserData.avatar" alt="">
+                <img v-else :src="getPerfilData.user.avatar" alt="">
             </div>
             <div class="cover-img">
 
             </div>
             <div class="stats-section">
                 <div class="edit-button-div">
-                    <button v-if="ownperfil" @click="changeShowEditPerfilModal(true)">Edit Perfil</button>
-                    <button v-else @click="followUser">{{ is_following ? 'Seguindo' : 'Seguir' }}</button>
+                    <button v-if="getPerfilData.ownperfil" @click="changeShowEditPerfilModal(true)">Edit Perfil</button>
+                    <button v-else @click="followUser">{{ getPerfilData.isfollowing ? 'Following' : 'Follow' }}</button>
                 </div>
                 <div class="name-div">
-                    <h3>{{ user.name }}</h3>
-                    <p>@{{ user.username }}</p>
+                    <h3>{{ getPerfilData.user.name }}</h3>
+                    <p>@{{ getPerfilData.user.username }}</p>
                 </div>
                 <div class="since-div">
-                    <p>Ingressou em outubro de 2016</p>
+                    <p>Joined in {{ getPerfilData.user.created_at | formatJoinDate }}</p>
                 </div>
                 <div class="followers-stats">
-                    <span>25 seguindo</span> <span>20 seguidores</span>
+                    <span>{{ getPerfilData.stats.is_following }} Following</span> <span>{{ getPerfilData.stats.was_followed }} Followers</span>
                 </div>
             </div>
         </div>
@@ -37,12 +37,12 @@
 
 <script>
 import { mapMutations, mapGetters, mapActions } from 'vuex'
+import moment from 'moment'
 
 export default {
-    props: ['ownperfil', 'user', 'isfollowing'],
     data () {
         return {
-            is_following: ''
+            
         }
     },
     methods: {
@@ -54,42 +54,49 @@ export default {
         ]),
         followUser () {
 
-            if ( !this.is_following ) {
+            if ( !this.getPerfilData.isfollowing ) {
                 this.$http.post('/follow', {
                     id: this.getUserData.id,
                     api_token: this.getUserData.api_token,
-                    followed_id: this.user.id
+                    followed_id: this.getPerfilData.user.id
                 })
                 .then(res => {
-                    if (res.data.success)
-                        this.is_following = true
+                    if (res.data.success) {
+                        const data = this.getPerfilData
+                        data.isfollowing = true
+
+                        this.$store.dispatch('actionPerfilData', data)
+                    } 
                 })
             } else {
-                this.$http.delete(`/follow/${this.user.id}`, {
+                this.$http.delete(`/follow/${this.getPerfilData.user.id}`, {
                     params: {
                         id: this.getUserData.id,
                         api_token: this.getUserData.api_token
                     }
                 })
                 .then(res => {
-                    if (res.data.success)
-                        this.is_following = false
+                    if (res.data.success) {
+                        const data = this.getPerfilData
+                        data.isfollowing = false
+                        
+                        this.$store.dispatch('actionPerfilData', data)
+                    }
                 })
             }
             
 
         }
     },
+    filters: {
+        formatJoinDate (value) {
+            return moment(value).format('MMMM D, YYYY')
+        }
+    },
     computed: {
         ...mapGetters([
-            'getUserData'
+            'getUserData', 'getPerfilData'
         ])
-    },
-    mounted () {
-        
-    },
-    created () {
-        this.is_following = this.isfollowing
     }
 
 }

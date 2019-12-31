@@ -7,7 +7,7 @@
 
             <div v-if="perfilExists" class="main-section">
 
-                <stats-box :ownperfil="ownPerfil" :user="user" :isfollowing="isfollowing" />
+                <stats-box />
                 
                 <div class="separator"></div>
 
@@ -16,7 +16,7 @@
             </div>
 
             <div v-else class="main-section">
-                <h1>Página não existe</h1>
+                <h1>{{ notFound }}</h1>
             </div>
 
             <div class="right-section">
@@ -51,9 +51,7 @@ export default {
     data () {
         return {
             perfilExists: false,
-            ownPerfil: false,
-            user: null,
-            isfollowing: ''
+            notFound: ''
         }
     },
     computed: {
@@ -63,39 +61,46 @@ export default {
     },
     methods: {
         ...mapActions([
-            'initPostsAction', 'actionPerfilPosts'
+            'initPostsAction', 'actionPerfilPosts', 'actionPerfilData'
         ]),
         ...mapMutations([
             'mutatePerfilPosts'
-        ])
-    },
-    created() {
-
-        this.$http.get('/get_perfil', { 
-            params: {
-                id: this.getUserData.id,
-                api_token: this.getUserData.api_token,
-                username: this.$route.params.username
-            }
-        })
-        .then(res => {
+        ]),
+        fetchData () {
             
-            if (res.data.success) {
-                this.perfilExists = true
-                this.user = res.data.user
-                this.isfollowing = res.data.isfollowing
+            this.$http.get('/get_perfil', { 
+                params: {
+                    id: this.getUserData.id,
+                    api_token: this.getUserData.api_token,
+                    username: this.$route.params.username
+                }
+            })
+            .then(res => {
+                const { data } = res
 
-                if ( res.data.user.username == this.getUserData.username ) {
-                    this.ownPerfil = true
-                } 
-            }
-                       
+                if (data.success) {
 
-        })
+                    this.perfilExists   = true
+                    this.$store.dispatch('actionPerfilData', data)
 
-        this.$store.dispatch('actionPerfilPosts', this.$route.params.username)
+                } else {
+                    this.notFound = "Not Found"
+                }
+                        
+
+            })
+
+            this.$store.dispatch('actionPerfilPosts', this.$route.params.username)
+        }
+    },
+    watch: {
+        '$route.params': {
+            handler() {
+                this.fetchData()
+            },
+            immediate: true,
+        }
     }
-
 }
 </script>
 
