@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import * as constants from '../utils/constants'
-import { log } from 'util'
 
 Vue.use(Vuex)
 
@@ -40,7 +39,8 @@ export default new Vuex.Store({
             state.userData = payload
         },
         initPosts ( state, payload ) {
-            
+            state.posts = []
+
             payload.map(query => {
                 state.posts.push(query)
             })
@@ -73,7 +73,7 @@ export default new Vuex.Store({
         {
             let isAuthenticated = JSON.parse(localStorage.getItem('authenticatedUser'))
 
-            await axios.get(`${constants.api_url}/posts`, { params: {
+            await axios.get(`${constants.api_url}/timeline`, { params: {
                 id: isAuthenticated.id,
                 api_token: isAuthenticated.api_token
             } })
@@ -83,10 +83,7 @@ export default new Vuex.Store({
                 commit('initPosts', res.data.posts)
 
             })
-            .catch(err => {
-                localStorage.setItem('authenticatedUser', null)
-                log(err)
-            }) 
+            .catch(() => {}) 
         },
         addPostAction ({ commit }, post) 
         {

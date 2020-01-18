@@ -8,6 +8,9 @@
           <input v-model="username" type="text" placeholder="Username">
           <input v-model="password" type="password" placeholder="Password">
           <button @click="doLogin" >Acess your account!</button>
+          <div class="register"> 
+            <p>Don't have an account? <span @click="register">Register here</span>.</p>
+          </div>
       </div>
   </div>
 </template>
@@ -38,6 +41,9 @@ export default {
                     
                 })
                 .catch(() => {})
+        },
+        register () {
+            this.$router.push('register')
         },
         ...mapActions([
             'actionUserData'
@@ -105,6 +111,16 @@ export default {
 
 .logo img {
     width: 50px;
+}
+
+.register {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.register span {
+    color: #107c10;
+    cursor: pointer;
 }
 
 </style>
