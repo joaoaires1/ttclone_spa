@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import * as constants from '../utils/constants'
 import { log } from 'util'
 
 Vue.use(Vuex)
@@ -72,7 +73,7 @@ export default new Vuex.Store({
         {
             let isAuthenticated = JSON.parse(localStorage.getItem('authenticatedUser'))
 
-            await axios.get('http://127.0.0.1:8000/api/posts', { params: {
+            await axios.get(`${constants.api_url}/posts`, { params: {
                 id: isAuthenticated.id,
                 api_token: isAuthenticated.api_token
             } })
@@ -101,7 +102,7 @@ export default new Vuex.Store({
         {
             let isAuthenticated = JSON.parse(localStorage.getItem('authenticatedUser'))
 
-            await axios.get('http://127.0.0.1:8000/api/posts_by_username', {
+            await axios.get(`${constants.api_url}/posts_by_username`, {
                 params: {
                     id: isAuthenticated.id,
                     api_token: isAuthenticated.api_token,

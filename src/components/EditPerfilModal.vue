@@ -65,6 +65,7 @@
 import { mapGetters, mapMutations, mapActions } from 'vuex'
 import 'cropperjs/dist/cropper.css';
 import Cropper from 'cropperjs';
+import * as constants from '../utils/constants'
 import { log } from 'util';
 
 export default {
@@ -74,8 +75,8 @@ export default {
             showModal: false,
             cropper: null,
             cropperCanvas: null,
-            image: 'http://127.0.0.1:8000/uploads/avatar/default.jpg',
-            urlImage: "url('http://127.0.0.1:8000/uploads/avatar/default.jpg')",
+            image: `${constants.api_url}/uploads/avatar/default.jpg`,
+            urlImage: `${constants.api_url}/uploads/avatar/default.jpg`,
             selectedFile: null,
             user: null,
             color: 'red',

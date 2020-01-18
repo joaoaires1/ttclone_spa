@@ -4,11 +4,12 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 import * as helper from '../src/utils/helpers'
+import * as constants from '../src/utils/constants'
 
 Vue.config.productionTip = false
 
 Vue.prototype.$http = axios.create({
-  baseURL: 'http://127.0.0.1:8000/api'
+  baseURL: constants.api_url
 })
 
 Vue.prototype.$helper = helper
