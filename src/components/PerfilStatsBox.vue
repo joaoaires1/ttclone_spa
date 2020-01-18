@@ -50,7 +50,7 @@ export default {
             'changeShowEditPerfilModal'
         ]),
         ...mapActions([
-            'userDataAction'
+            'actionUserData'
         ]),
         followUser () {
 

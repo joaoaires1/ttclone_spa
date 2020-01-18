@@ -90,7 +90,7 @@ export default {
             'changeShowEditPerfilModal'
         ]),
         ...mapActions([
-            'userDataAction', 'initPostsAction'
+            'actionUserData', 'initPostsAction'
         ]),
         onFileChange(e) {
             var files = e.target.files;
@@ -148,7 +148,7 @@ export default {
 
                 user.avatar = data.user.avatar
                 user.name = data.user.name
-                this.$store.dispatch('userDataAction', user)
+                this.$store.dispatch('actionUserData', user)
                 this.$store.dispatch('initPostsAction')
                 this.$helper.setStorageUserData(user)
 

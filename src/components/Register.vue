@@ -40,7 +40,7 @@ export default {
                     let parsed = JSON.stringify(data)
                     localStorage.setItem('authenticatedUser', parsed)
 
-                    this.$store.dispatch('userDataAction', data)
+                    this.$store.dispatch('actionUserData', data)
                     this.$router.push('home')
                 }
             })

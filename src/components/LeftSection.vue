@@ -11,19 +11,19 @@
                 <img src="../assets/home-icon.svg" width="30px" alt="">
                 <p class="nav-text">Home Page</p>
             </div>
+
             <div class="nav-link" @click="navigate('explore')">
                 <img src="../assets/hashtag.svg" width="30px" alt="">
                 <p class="nav-text">Explore</p>
             </div>
+
             <div class="nav-link" @click="navigate(getUserData.username)" >
                 <img :src="getUserData.avatar" class="nav-avatar" width="30px" alt="">
                 <p class="nav-text">Perfil</p>
             </div>
+
             <div class="logout nav-link">
-                <button @click="doLogout" >sair</button>
-            </div>
-            <div class="nav-tweet nav-link">
-                <button>Tweet</button>
+                <button @click="doLogout" >logout</button>
             </div>
 
         </div>
@@ -32,9 +32,7 @@
 </template>
 
 <script>
-
 import { mapActions, mapGetters } from 'vuex'
-// import { log } from 'util'
 
 export default {
     data () {
@@ -51,11 +49,13 @@ export default {
             this.$http.post('/logout', {
                 id: this.user.id,
                 api_token: this.user.api_token
-            }).then(() => {
-                localStorage.setItem('authenticatedUser', false)
+            })
+            .then(() => {
+                this.$helper.setStorageUserData(false)
                 this.$store.dispatch('clearPostsAction')
                 this.$router.push('login')
             })
+            .catch(() => {})
 
         },
         navigate(route) {
@@ -68,7 +68,7 @@ export default {
         ])
     },
     created () {
-        this.user = JSON.parse(localStorage.getItem('authenticatedUser'))
+        this.user = this.$helper.getStorageUserData()
     }
 }
 

@@ -88,7 +88,7 @@ router.beforeEach((to, from, next) => {
     if (requiresAuth && !isAuthenticated) {
         next('/login')
     } else {
-        store.dispatch('userDataAction', isAuthenticated)
+        store.dispatch('actionUserData', isAuthenticated)
         next()
     }
 })

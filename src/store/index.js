@@ -7,15 +7,17 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        name: "",
+        userData: null,
         posts: [],
         exploreResults: [],
         showEditPerfilModal: false,
-        userData: null,
         perfilPosts: [],
         perfilData: null
     },
     getters: {
+        getUserData: state => {
+            return state.userData
+        },
         getPosts: state => {
             return state.posts
         },
@@ -25,9 +27,6 @@ export default new Vuex.Store({
         getShowEditPerfilModal: state => {
             return state.showEditPerfilModal
         },
-        getUserData: state => {
-            return state.userData
-        },
         getPerfilPosts: state => {
             return state.perfilPosts
         },
@@ -36,8 +35,8 @@ export default new Vuex.Store({
         }
     },
     mutations: {
-        changeName (state, payload) {
-            state.name = payload
+        mutateUserData ( state, payload ) {
+            state.userData = payload
         },
         initPosts ( state, payload ) {
             
@@ -58,9 +57,6 @@ export default new Vuex.Store({
         changeShowEditPerfilModal ( state, payload ) {
             state.showEditPerfilModal = payload
         },
-        userData ( state, payload ) {
-            state.userData = payload
-        },
         mutatePerfilPosts ( state, payload ) {
             state.perfilPosts = payload
         },
@@ -69,8 +65,8 @@ export default new Vuex.Store({
         }  
     },
     actions: {
-        changeNameAction ({ commit }, name) {
-            commit('changeName', name)  
+        actionUserData ({ commit }, user) {
+            commit('mutateUserData', user)
         },
         async initPostsAction ({ commit }) 
         {
@@ -100,9 +96,6 @@ export default new Vuex.Store({
         },
         setExploreResultsAction ({ commit }, results) {
             commit('setExploreResults', results)
-        },
-        userDataAction ({ commit }, user) {
-            commit('userData', user)
         },
         async actionPerfilPosts ({ commit }, username)
         {

@@ -58,7 +58,7 @@ export default {
         ])
     },
     created () {
-        this.$store.dispatch('userDataAction', this.$helper.getStorageUserData())
+        this.$store.dispatch('actionUserData', this.$helper.getStorageUserData())
         this.user = this.$helper.getStorageUserData()
     }
 

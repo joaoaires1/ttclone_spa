@@ -14,20 +14,12 @@
 
 <script>
 import { mapActions } from 'vuex'
-// import { log } from 'util'
 
 export default {
     data () {
         return {
             username: '',
-            password: '',
-            userData: {
-                id: '',
-                name: '',
-                username: '',
-                email: '',
-                api_token: ''
-            }
+            password: ''
         }
     },
     methods: {
@@ -36,20 +28,19 @@ export default {
                     username: this.username,
                     password: this.password 
                 })
-                .then(res => {
+                .then(({ data }) => { 
 
-                    let { data } = res
-                    let parsed = JSON.stringify(data)
-
-                    this.$store.dispatch('userDataAction', data)
-
-                    localStorage.setItem('authenticatedUser', parsed)
-
-                    this.$router.push('home')
+                    if (data.success) {
+                        this.$store.dispatch('actionUserData', data)
+                        this.$helper.setStorageUserData(data)
+                        this.$router.push('home')
+                    }
+                    
                 })
+                .catch(() => {})
         },
         ...mapActions([
-            'userDataAction'
+            'actionUserData'
         ])
     },
     created () {
