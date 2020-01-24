@@ -1,29 +1,29 @@
 <template>
   <div class="left-section">
 
-        <div class="logo">
-            <img src="../assets/twitter.svg" width="30px" alt="">
-        </div>
+        <div class="left-nav">
 
-        <div class="nav">
+            <div class="logo">
+                <img src="../assets/twitter.svg"  alt="">
+            </div>
 
             <div class="nav-link" @click="navigate('home')">
-                <img src="../assets/home-icon.svg" width="30px" alt="">
+                <img src="../assets/home-icon.svg" alt="">
                 <p class="nav-text">Home Page</p>
             </div>
 
             <div class="nav-link" @click="navigate('explore')">
-                <img src="../assets/hashtag.svg" width="30px" alt="">
+                <img src="../assets/hashtag.svg" alt="">
                 <p class="nav-text">Explore</p>
             </div>
 
             <div class="nav-link" @click="navigate(getUserData.username)" >
-                <img :src="getUserData.avatar" class="nav-avatar" width="30px" alt="">
+                <img :src="getUserData.avatar" class="nav-avatar" alt="">
                 <p class="nav-text">Perfil</p>
             </div>
 
-            <div class="logout nav-link">
-                <button @click="doLogout" >logout</button>
+            <div @click="doLogout" class="logout">
+                <img src="../assets/logout.svg" alt="">
             </div>
 
         </div>
@@ -76,60 +76,7 @@ export default {
 
 <style>
 
-.left-section {
-    width: 25%;
-    padding-left: 15px;
-    padding-right: 15px;
-}
-
-.logo {
-    padding-top: 10px;
-    padding-bottom: 10px;
-}
-
-.nav div {
-    display: flex;
-    align-items: center;
-    margin-top: 12px;
-}
-
-.nav-text {
-    margin-left: 26px;
-    font-size: 19px;
-    font-weight: bold;
-    letter-spacing: 0.05em;
-}
-
-.nav-avatar {
-    border-radius: 50px;
-}
-
-.nav-tweet {
-    justify-content: center;
-}
-
-.nav-tweet button {
-    padding: 8px 36px;
-    border: none;
-    border-radius: 50px;
-    background: #107C10;
-    color: #FFF;
-    font-size: 16px;
-    font-weight: bold;
-    letter-spacing: 0.05em;
-}
-
-.logout button{
-    padding: 4px 6px;
-    border: none;
-    border-radius: 50px;
-    background: #107C10;
-    color: #FFF;
-    font-weight: bold;
-    letter-spacing: 0.05em
-}
-
-.nav-link, .nav-link button {
+.logout img {
     cursor: pointer;
 }
 

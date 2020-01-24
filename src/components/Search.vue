@@ -7,10 +7,10 @@
             <input v-model="name" @keyup="getUsers" @keyup.enter="submitSearch" type="text" placeholder="Search on Twitter">
         </div>
 
-        <div v-if="getExploreResults.length > 0" class="results">
-            <div v-show="show" class="result-row" v-for="item in getExploreResults" :key="item.id" @click="navigate(item.username)">
+        <div v-if="getExploreResults.length > 0 && show" class="results">
+            <div class="result-row" v-for="item in getExploreResults" :key="item.id" @click="navigate(item.username)">
                 <div class="result-avatar">
-                    <img src="../assets/avatar.png" alt="">
+                    <img :src="item.avatar" alt="">
                 </div>
                 <div class="result-name">
                     <div class="name">{{ item.name }}</div>
@@ -115,6 +115,7 @@ export default {
 }
 
 .results {
+    width: 90%;
     border: 1px solid #eee;
     border-radius: 5px;
     position: absolute;
@@ -126,6 +127,7 @@ export default {
     display: flex;
     padding: 10px;
     border-bottom: 1px solid #eee;
+    cursor: pointer;
 }
 
 .result-avatar img {

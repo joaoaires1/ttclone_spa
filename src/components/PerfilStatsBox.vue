@@ -136,6 +136,7 @@ export default {
     color: #107C10;
     font-weight: bold;
     letter-spacing: 0.05em;
+    cursor: pointer;
 }
 
 .name-div {

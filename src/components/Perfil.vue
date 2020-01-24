@@ -106,35 +106,6 @@ export default {
 
 <style scoped>
 
-.container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
-
-.content {
-    width: 100%;
-    height: 100%;
-    max-width: 1200px;
-    display: flex;
-    justify-content: center;
-}
-
-.main-section {
-    width: 50%;
-    border-left: 1px solid #e5ffe5;
-    border-right: 1px solid #e5ffe5;
-}
-
-.main-section h1 {
-    text-align: center;
-}
-
-.right-section {
-    width: 25%;
-    padding: 12px;
-}
-
 .separator {
     background: rgb(230, 236, 240);
     height: 10px;

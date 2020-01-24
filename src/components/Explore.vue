@@ -22,7 +22,7 @@
 
                     <div class="result-explore" v-for="item in getExploreResults" :key="item.id" @click="navigate(item.username)">
                         <div class="result-avatar">
-                            <img src="../assets/avatar.png" alt="">
+                            <img :src="item.avatar" alt="">
                         </div>
 
                         <div class="result-name">
@@ -85,26 +85,6 @@ export default {
 
 <style>
 
-.container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
-
-.content {
-    width: 100%;
-    height: 100%;
-    max-width: 1200px;
-    display: flex;
-    justify-content: center;
-}
-
-.main-section {
-    width: 50%;
-    border-left: 1px solid #e5ffe5;
-    border-right: 1px solid #e5ffe5;
-}
-
 .header-main {
     padding: 15px;
     border-bottom: 1px solid #eee;
@@ -125,11 +105,7 @@ export default {
     display: flex;
     padding: 10px;
     border-bottom: 1px solid #eee;
-}
-
-.right-section {
-    width: 25%;
-    padding: 12px;
+    cursor: pointer;
 }
 
 .who-follows {

@@ -123,6 +123,7 @@ textarea {
     color: #FFF;
     font-weight: bold;
     letter-spacing: 0.05em;
+    cursor: pointer;
 }
 
 </style>

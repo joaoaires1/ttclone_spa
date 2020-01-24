@@ -1,7 +1,7 @@
 <template>
-  <div class="container">
+  <div class="container login">
       <div class="login-box">
-          <div class="logo">
+          <div class="logo-login">
               <img src="../assets/twitter.svg" alt="">
           </div>
           <h3>Login</h3>
@@ -55,10 +55,10 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 
-.container {
-    display: flex;
+.login {
+    justify-content: center;
     align-items: center;
     justify-content: center;
     height: 100vh;
@@ -103,13 +103,13 @@ export default {
     cursor: pointer;
 }
 
-.logo {
+.logo-login {
     display: flex;
     justify-content: center;
     margin-bottom: 8px;
 }
 
-.logo img {
+.logo-login  img {
     width: 50px;
 }
 
