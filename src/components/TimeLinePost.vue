@@ -42,6 +42,7 @@ export default {
             if ( !value ) return ''
 
             let date = moment(value).format("YYYY-MM-DD HH:mm:ss")
+            date = moment(date).subtract(3, 'hours').format("YYYY-MM-DD HH:mm:ss")
             let now  = moment()
             let dif  = now.diff(date, 'minutes')
 
