@@ -33,6 +33,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
+// import { log } from 'util'
 
 export default {
     data () {
@@ -46,16 +47,9 @@ export default {
         ]),
         doLogout () {
 
-            this.$http.post('/logout', {
-                id: this.user.id,
-                api_token: this.user.api_token
-            })
-            .then(() => {
-                this.$helper.setStorageUserData(false)
-                this.$store.dispatch('clearPostsAction')
-                this.$router.push('login')
-            })
-            .catch(() => {})
+            this.$helper.setStorageUserData(false)
+            this.$store.dispatch('clearPostsAction')
+            this.$router.push('login')
 
         },
         navigate(route) {
