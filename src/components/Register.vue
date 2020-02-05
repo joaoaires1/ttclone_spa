@@ -1,5 +1,10 @@
 <template>
   <div class="container login">
+      <loading :active.sync="isLoading"
+        :loader="loader"
+        :color="color"
+        :is-full-page="fullPage"></loading>
+
       <div class="login-box">
           <div class="logo-login">
               <img src="../assets/twitter.svg" alt="">
@@ -15,17 +20,28 @@
 </template>
 
 <script>
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
+
 export default {
     data() {
         return {
             name: '',
             email: '',
             username: '',
-            password: ''
+            password: '',
+            isLoading: false,
+            fullPage: true,
+            loader: 'dots',
+            color: '#107c10'
         }
+    },
+    components: {
+        Loading
     },
     methods: {
         register () {
+            this.isLoading = true
 
             this.$http.post('/register', {
                 name: this.name,
@@ -34,6 +50,8 @@ export default {
                 password: this.password
             })
             .then( res => {
+                this.isLoading = false
+
                 let { data } = res
 
                 if ( data.success ) {
@@ -44,7 +62,7 @@ export default {
                     this.$router.push('home')
                 }
             })
-            .catch( () => {} )
+            .catch( () => {this.isLoading = false} )
 
         }
     }

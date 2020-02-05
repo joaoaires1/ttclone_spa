@@ -1,5 +1,9 @@
 <template>
     <div class="tweet-box">
+        <loading :active.sync="isLoading"
+        :loader="loader"
+        :color="color"
+        :is-full-page="fullPage"></loading>
 
         <div class="tweet-box-header">
             <p>Home Page</p>
@@ -25,14 +29,23 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import { log } from 'util'
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
+
 export default {
 
     data() {
         return {
             user: '',
-            postContent: ''
+            postContent: '',
+            isLoading: false,
+            fullPage: true,
+            loader: 'dots',
+            color: '#107c10'
         }
+    },
+    components: {
+        Loading
     },
     methods: {
         ...mapActions([
@@ -40,16 +53,18 @@ export default {
         ]),
         storePost ()
         {
+            this.isLoading = true
+
             this.$http.post('/posts', {
                 id: this.user.id,
                 api_token: this.user.api_token,
                 text: this.postContent
             }).then(res => {
-                
+                this.isLoading = false
                 this.postContent = ''
                 this.$store.dispatch('addPostAction', res.data)
 
-            }).catch(err => log(err))
+            }).catch(() => { this.isLoading = false })
         }
     },
     computed: {

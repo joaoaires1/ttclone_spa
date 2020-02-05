@@ -1,5 +1,9 @@
 <template>
   <div class="container login">
+      <loading :active.sync="isLoading"
+        :loader="loader"
+        :color="color"
+        :is-full-page="fullPage"></loading>
       <div class="login-box">
           <div class="logo-login">
               <img src="../assets/twitter.svg" alt="">
@@ -17,22 +21,32 @@
 
 <script>
 import { mapActions } from 'vuex'
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 
 export default {
     data () {
         return {
             username: '',
-            password: ''
+            password: '',
+            isLoading: false,
+            fullPage: true,
+            loader: 'dots',
+            color: '#107c10'
         }
+    },
+    components: {
+        Loading
     },
     methods: {
         async doLogin () {
+            this.isLoading = true
             await this.$http.post('/login', { 
                     username: this.username,
                     password: this.password 
                 })
                 .then(({ data }) => { 
-
+                    this.isLoading = false
                     if (data.success) {
                         this.$store.dispatch('actionUserData', data)
                         this.$helper.setStorageUserData(data)
@@ -40,7 +54,7 @@ export default {
                     }
                     
                 })
-                .catch(() => {})
+                .catch(() => { this.isLoading = false })
         },
         register () {
             this.$router.push('register')
