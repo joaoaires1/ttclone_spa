@@ -53,7 +53,7 @@ export default {
                     name: this.name
                 } })
                 .then( res => {
-                    this.$store.dispatch('setExploreResultsAction', res.data)
+                    this.$store.dispatch('setExploreResultsAction', res.data.peoples)
                 } )
             } else {
                 this.$store.dispatch('setExploreResultsAction', [])

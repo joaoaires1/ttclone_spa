@@ -147,8 +147,8 @@ export default {
                 let user = this.$helper.getStorageUserData()
                 let { data } = res
 
-                user.avatar = data.user.avatar
-                user.name = data.user.name
+                user.avatar = data.avatar
+                user.name = data.name
                 this.$store.dispatch('actionUserData', user)
                 this.$store.dispatch('initPostsAction')
                 this.$helper.setStorageUserData(user)
