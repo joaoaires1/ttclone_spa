@@ -27,8 +27,7 @@ export default {
     props: ['page'],
     data() {
         return {
-            postData: '',
-            a: 'aaaaa'
+            postData: ''
         }
     },
     computed: {

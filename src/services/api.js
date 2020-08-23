@@ -67,7 +67,7 @@ export const apiStorePost = async (text) => {
 }
 
 /**
- * Call store posts api
+ * Call search users api
  * @param name
  */
 export const apiSearchUsers = async (name) => {
@@ -77,6 +77,54 @@ export const apiSearchUsers = async (name) => {
                 name
             }
         });
+        
+        return data;
+    } catch (error) {
+        return false;
+    }
+}
+
+/**
+ * Call store follow api
+ * @param followed_id
+ */
+export const apiStoreFollow = async (followed_id) => {
+    try {
+        const { data } = await api.post('/follow', {
+            followed_id
+        });
+        
+        return data;
+    } catch (error) {
+        return false;
+    }
+}
+
+/**
+ * Call store unfollow api
+ * @param followed_id
+ */
+export const apiUnFollow = async (followed_id) => {
+    try {
+        const { data } = await api.delete('/unfollow', {
+            params: {
+                followed_id
+            }
+        });
+        
+        return data;
+    } catch (error) {
+        return false;
+    }
+}
+
+/**
+ * Call edit perfil w api
+ * @param formdata
+ */
+export const apiEditPerfil = async (formdata) => {
+    try {
+        const { data } = await api.post('/edit_perfil', formdata);
         
         return data;
     } catch (error) {

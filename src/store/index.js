@@ -1,7 +1,5 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import axios from 'axios'
-import * as constants from '../utils/constants'
+import Vue from 'vue';
+import Vuex from 'vuex';
 import { apiGetPosts } from '../services/api';
 
 Vue.use(Vuex)
@@ -89,22 +87,9 @@ export default new Vuex.Store({
         setExploreResultsAction ({ commit }, results) {
             commit('setExploreResults', results)
         },
-        async actionPerfilPosts ({ commit }, username)
+        actionPerfilPosts ({ commit }, posts)
         {
-            let isAuthenticated = JSON.parse(localStorage.getItem('authenticatedUser'))
-
-            await axios.get(`${constants.api_url}/posts_by_username`, {
-                params: {
-                    id: isAuthenticated.id,
-                    api_token: isAuthenticated.api_token,
-                    username: username
-                }
-            })
-            .then(res => {
-                
-                commit('mutatePerfilPosts', res.data.posts)
-                
-            })
+            commit('mutatePerfilPosts', posts)
         },
         actionPerfilData ({ commit }, data) {
             commit('mutatePerfilData', data)

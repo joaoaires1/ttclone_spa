@@ -66,7 +66,7 @@ import { mapGetters, mapMutations, mapActions } from 'vuex'
 import 'cropperjs/dist/cropper.css';
 import Cropper from 'cropperjs';
 import * as constants from '../utils/constants'
-import { log } from 'util';
+import { apiEditPerfil } from '../services/api';
 
 export default {
 
@@ -132,29 +132,24 @@ export default {
                 this.cropper = null;  
             }
         },
-        submitEditPerfil () {
-            const formData = new FormData()
+        async submitEditPerfil () {
+            const formData = new FormData();
 
             if (this.selectedFile)
-                formData.append('photo', this.selectedFile)
+                formData.append('photo', this.selectedFile);
 
-            formData.append('id', this.user.id)
-            formData.append('api_token', this.user.api_token)
-            formData.append('name', this.name)
+            formData.append('name', this.name);
 
-            this.$http.post('/edit_perfil', formData)
-            .then( res => {
-                let user = this.$helper.getStorageUserData()
-                let { data } = res
-
-                user.avatar = data.avatar
-                user.name = data.name
-                this.$store.dispatch('actionUserData', user)
-                this.$store.dispatch('initPostsAction')
-                this.$helper.setStorageUserData(user)
-
-            })
-            .catch(err => log(err))
+            const response = await apiEditPerfil(formData);
+            
+            if (response) {
+                let user = this.$helper.getStorageUserData();
+                user.avatar = response.avatar;
+                user.name = response.name;
+                this.$store.dispatch('actionUserData', user);
+                this.$helper.setStorageUserData(user);
+                window.location.replace(`/${user.username}`);
+            }
         }
     },
     computed: {
@@ -163,11 +158,11 @@ export default {
         ]),
     },
     created () {
-        this.user = this.$helper.getStorageUserData()
-        this.name = this.user.name
+        this.user = this.$helper.getStorageUserData();
+        this.name = this.user.name;
 
         if (this.user.avatar) {
-            this.urlImage = `url(${this.user.avatar})`
+            this.urlImage = `url(${this.user.avatar})`;
         }
     }
 

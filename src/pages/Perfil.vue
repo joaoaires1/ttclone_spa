@@ -37,7 +37,8 @@ import Search from '../components/Search'
 import PerfilStatsBox from '../components/PerfilStatsBox'
 import TimeLinePost from '../components/TimeLinePost'
 import EditPerfilModal from '../components/EditPerfilModal'
-import { mapActions, mapGetters, mapMutations } from 'vuex'
+import { apiGetPosts } from '../services/api'
+import {log} from 'util'
 
 export default {
 
@@ -54,43 +55,22 @@ export default {
             notFound: ''
         }
     },
-    computed: {
-        ...mapGetters([
-            'getUserData'
-        ])
-    },
     methods: {
-        ...mapActions([
-            'initPostsAction', 'actionPerfilPosts', 'actionPerfilData'
-        ]),
-        ...mapMutations([
-            'mutatePerfilPosts'
-        ]),
-        fetchData () {
-            
-            this.$http.get('/get_perfil', { 
-                params: {
-                    id: this.getUserData.id,
-                    api_token: this.getUserData.api_token,
-                    username: this.$route.params.username
-                }
-            })
-            .then(res => {
-                const { data } = res
+        async fetchData () {
+            const response = await apiGetPosts(
+                this.$route.params.username,
+                true,
+                1
+            );
 
-                if (data.success) {
-
-                    this.perfilExists   = true
-                    this.$store.dispatch('actionPerfilData', data)
-
-                } else {
-                    this.notFound = "Not Found"
-                }
-                        
-
-            })
-
-            this.$store.dispatch('actionPerfilPosts', this.$route.params.username)
+            if (response) {
+                log(response.user)
+                this.perfilExists   = true;
+                this.$store.dispatch('actionPerfilData', response.user);
+                this.$store.dispatch('actionPerfilPosts', response.posts);
+            } else {
+                this.notFound = "Not Found"
+            }
         }
     },
     watch: {

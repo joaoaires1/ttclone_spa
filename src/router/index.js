@@ -7,7 +7,7 @@ import * as helper from '../utils/helpers'
 import store from '../store'
 
 const Home = () => import('../pages/Home')
-const Perfil = () => import('../components/Perfil')
+const Perfil = () => import('../pages/Perfil')
 
 Vue.use(VueRouter)
 

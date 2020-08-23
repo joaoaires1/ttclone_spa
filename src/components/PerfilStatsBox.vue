@@ -2,29 +2,29 @@
     <div>
 
         <div class="stats-header">
-            <h3>{{ getPerfilData.user.name }}</h3>
-            <p> {{ getPerfilData.posts }} tweets </p>
+            <h3>{{ getPerfilData.name }}</h3>
+            <p> {{ getPerfilData.total_posts }} tweets </p>
         </div>
 
         <div class="stats-content">
             <div class="stats-avatar">
-                <img v-if="getPerfilData.ownperfil" :src="getUserData.avatar" alt="">
-                <img v-else :src="getPerfilData.user.avatar" alt="">
+                <img v-if="getPerfilData.own_perfil" :src="getUserData.avatar" alt="">
+                <img v-else :src="getPerfilData.avatar" alt="">
             </div>
             <div class="cover-img">
 
             </div>
             <div class="stats-section">
                 <div class="edit-button-div">
-                    <button v-if="getPerfilData.ownperfil" @click="changeShowEditPerfilModal(true)">Edit Perfil</button>
-                    <button v-else @click="followUser">{{ getPerfilData.isfollowing ? 'Following' : 'Follow' }}</button>
+                    <button v-if="getPerfilData.own_perfil" @click="changeShowEditPerfilModal(true)">Edit Perfil</button>
+                    <button v-else @click="followUser">{{ getPerfilData.is_following ? 'Following' : 'Follow' }}</button>
                 </div>
                 <div class="name-div">
-                    <h3>{{ getPerfilData.user.name }}</h3>
-                    <p>@{{ getPerfilData.user.username }}</p>
+                    <h3>{{ getPerfilData.name }}</h3>
+                    <p>@{{ getPerfilData.username }}</p>
                 </div>
                 <div class="since-div">
-                    <p>Joined in {{ getPerfilData.user.created_at | formatJoinDate }}</p>
+                    <p>Joined in {{ getPerfilData.created_at | formatJoinDate }}</p>
                 </div>
                 <div class="followers-stats">
                     <span>{{ getPerfilData.stats.is_following }} Following</span> <span>{{ getPerfilData.stats.was_followed }} Followers</span>
@@ -36,8 +36,9 @@
 </template>
 
 <script>
-import { mapMutations, mapGetters, mapActions } from 'vuex'
-import moment from 'moment'
+import { mapMutations, mapGetters, mapActions } from 'vuex';
+import moment from 'moment';
+import { apiStoreFollow, apiUnFollow } from '../services/api';
 
 export default {
     data () {
@@ -52,37 +53,24 @@ export default {
         ...mapActions([
             'actionUserData'
         ]),
-        followUser () {
+        async followUser () {
 
-            if ( !this.getPerfilData.isfollowing ) {
-                this.$http.post('/follow', {
-                    id: this.getUserData.id,
-                    api_token: this.getUserData.api_token,
-                    followed_id: this.getPerfilData.user.id
-                })
-                .then(res => {
-                    if (res.data.success) {
-                        const data = this.getPerfilData
-                        data.isfollowing = true
+            if ( !this.getPerfilData.is_following ) {
+                const response = await apiStoreFollow(this.getPerfilData.id);
 
-                        this.$store.dispatch('actionPerfilData', data)
-                    } 
-                })
+                if (response) {
+                    const data = this.getPerfilData;
+                    data.is_following = true;
+                    this.$store.dispatch('actionPerfilData', data);
+                }
             } else {
-                this.$http.delete(`/follow/${this.getPerfilData.user.id}`, {
-                    params: {
-                        id: this.getUserData.id,
-                        api_token: this.getUserData.api_token
-                    }
-                })
-                .then(res => {
-                    if (res.data.success) {
-                        const data = this.getPerfilData
-                        data.isfollowing = false
-                        
-                        this.$store.dispatch('actionPerfilData', data)
-                    }
-                })
+                const response = await apiUnFollow(this.getPerfilData.id);
+
+                if (response) {
+                    const data = this.getPerfilData;
+                    data.is_following = false;
+                    this.$store.dispatch('actionPerfilData', data);
+                }
             }
             
 
