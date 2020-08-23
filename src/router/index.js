@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Login from '../components/Login'
+import Login from '../pages/Login'
 import Register from '../components/Register'
 import Explore from '../components/Explore'
 import * as helper from '../utils/helpers'
 import store from '../store'
 
-const Home = () => import('../components/Home')
+const Home = () => import('../pages/Home')
 const Perfil = () => import('../components/Perfil')
 
 Vue.use(VueRouter)

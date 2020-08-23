@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { apiLogin } from '../services/api';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 
@@ -40,31 +40,22 @@ export default {
     },
     methods: {
         async doLogin () {
-            this.isLoading = true
-            await this.$http.post('/login', { 
-                    username: this.username,
-                    password: this.password 
-                })
-                .then(({ data }) => { 
-                    this.isLoading = false
-                    if (data.success) {
-                        this.$store.dispatch('actionUserData', data)
-                        this.$helper.setStorageUserData(data)
-                        this.$router.push('home')
-                    }
-                    
-                })
-                .catch(() => { this.isLoading = false })
+            this.isLoading = true;
+            const response = await apiLogin(
+                this.username,
+                this.password
+            );
+
+            if (response) {
+                await this.$helper.setStorageUserData(response.user);
+                window.location.replace("/home");
+            }
+            
+            this.isLoading = false;
         },
         register () {
             this.$router.push('register')
-        },
-        ...mapActions([
-            'actionUserData'
-        ])
-    },
-    created () {
-
+        }
     }
 }
 </script>

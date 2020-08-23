@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import * as constants from '../utils/constants'
+import { apiGetPosts } from '../services/api';
 
 Vue.use(Vuex)
 
@@ -69,21 +70,14 @@ export default new Vuex.Store({
         actionUserData ({ commit }, user) {
             commit('mutateUserData', user)
         },
-        async initPostsAction ({ commit }) 
+        async initPostsAction ({ commit }, username) 
         {
-            let isAuthenticated = JSON.parse(localStorage.getItem('authenticatedUser'))
-
-            await axios.get(`${constants.api_url}/timeline`, { params: {
-                id: isAuthenticated.id,
-                api_token: isAuthenticated.api_token
-            } })
-            .then(res => {
-                
-                if (res.data.posts.length == this.state.posts.length) return
-                commit('initPosts', res.data.posts)
-
-            })
-            .catch(() => {}) 
+            const response = await apiGetPosts(
+                username, false, 1
+            );
+            
+            if (response)
+                commit('initPosts', response.posts);
         },
         addPostAction ({ commit }, post) 
         {

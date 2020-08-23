@@ -10,3 +10,12 @@ export const setStorageUserData = data => {
     let parsed = JSON.stringify(data)
     localStorage.setItem('authenticatedUser', parsed)
 }
+
+export const getAccessToken = () => {
+    const data = getStorageUserData();
+    if ( !data ) {
+        return '';
+    }
+    
+    return data.access;
+}

@@ -22,8 +22,8 @@
 </template>
 
 <script>
-// import { log } from 'util'
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex';
+import { apiSearchUsers } from '../services/api';
 
 export default {
 
@@ -44,27 +44,25 @@ export default {
         ...mapActions([
             'setExploreResultsAction'
         ]),
-        getUsers () {
+        async getUsers () {
 
             if ( this.name.length > 0 ) {
-                this.$http.get('/search', { params: {
-                    id: this.user.id,
-                    api_token: this.user.api_token,
-                    name: this.name
-                } })
-                .then( res => {
-                    this.$store.dispatch('setExploreResultsAction', res.data.peoples)
-                } )
+                const response = await apiSearchUsers(this.name);
+                if (response)
+                    this.$store.dispatch(
+                        'setExploreResultsAction',
+                        response.peoples
+                    );
             } else {
                 this.$store.dispatch('setExploreResultsAction', [])
             }
             
         },
         submitSearch () {
-            this.show = false
-            this.name = ""
+            this.show = false;
+            this.name = "";
             if ( this.page != 'explore' ) {
-                this.$router.push('explore')
+                this.$router.push('explore');
             }
 
         },
@@ -73,8 +71,6 @@ export default {
         }
     },
     created() {
-        const isAuthenticated = JSON.parse(localStorage.getItem('authenticatedUser'))
-        this.user = isAuthenticated
         this.$store.dispatch('setExploreResultsAction', [])
 
         if ( this.page == 'explore' ) {

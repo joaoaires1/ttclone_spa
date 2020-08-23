@@ -28,7 +28,7 @@ import LeftSection from '../components/LeftSection'
 import HomeTweetBox from '../components/HomeTweetBox'
 import Search from '../components/Search'
 import TimeLinePost from '../components/TimeLinePost'
-import { mapActions, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
 
@@ -38,26 +38,17 @@ export default {
         'search': Search,
         'timiline-post': TimeLinePost
     },
-    data () {
-        return {
-            user: ''
-        }
-    },
+
     computed: {
         ...mapGetters([
-            'getPosts'
+            'getUserData'
         ])
-    },
-    methods: {
-        ...mapActions([
-            'initPostsAction'
-        ])
-    },
-    mounted () {
-
     },
     created() {
-        this.$store.dispatch('initPostsAction')
+        this.$store.dispatch(
+            'initPostsAction',
+            this.getUserData.username
+        );
     }
 
 }

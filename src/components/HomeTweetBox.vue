@@ -28,9 +28,10 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
+import { apiStorePost } from '../services/api';
 
 export default {
 
@@ -48,33 +49,23 @@ export default {
         Loading
     },
     methods: {
-        ...mapActions([
-            'addPostAction'
-        ]),
-        storePost ()
+
+        async storePost ()
         {
-            this.isLoading = true
+            this.isLoading = true;
 
-            this.$http.post('/posts', {
-                id: this.user.id,
-                api_token: this.user.api_token,
-                text: this.postContent
-            }).then(res => {
-                this.isLoading = false
-                this.postContent = ''
-                this.$store.dispatch('addPostAction', res.data)
+            const response = await apiStorePost(this.postContent);
+            
+            if (response)
+                this.$store.dispatch('addPostAction', response);
 
-            }).catch(() => { this.isLoading = false })
+            this.isLoading = false;
         }
     },
     computed: {
         ...mapGetters([
             'getUserData'
         ])
-    },
-    created () {
-        this.$store.dispatch('actionUserData', this.$helper.getStorageUserData())
-        this.user = this.$helper.getStorageUserData()
     }
 
 }
