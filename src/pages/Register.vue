@@ -22,6 +22,7 @@
 <script>
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
+import { apiRegister } from '../services/api';
 
 export default {
     data() {
@@ -40,30 +41,22 @@ export default {
         Loading
     },
     methods: {
-        register () {
-            this.isLoading = true
+        async register () {
+            this.isLoading = true;
+            
+            const response = await apiRegister(
+                this.email,
+                this.name,
+                this.username,
+                this.password,
+            );
 
-            this.$http.post('/register', {
-                name: this.name,
-                email: this.email,
-                username: this.username,
-                password: this.password
-            })
-            .then( res => {
-                this.isLoading = false
+            if (response) {
+                await this.$helper.setStorageUserData(response.user);
+                window.location.replace("/home");
+            }
 
-                let { data } = res
-
-                if ( data.success ) {
-                    let parsed = JSON.stringify(data)
-                    localStorage.setItem('authenticatedUser', parsed)
-
-                    this.$store.dispatch('actionUserData', data)
-                    this.$router.push('home')
-                }
-            })
-            .catch( () => {this.isLoading = false} )
-
+            this.isLoading = false;
         }
     }
 }

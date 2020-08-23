@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../pages/Login'
-import Register from '../components/Register'
+import Register from '../pages/Register'
 import Explore from '../components/Explore'
 import * as helper from '../utils/helpers'
 import store from '../store'
